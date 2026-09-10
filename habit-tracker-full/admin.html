@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Habit Tracker</title>
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-hover: #4338CA;
+      --bg: #F3F4F6;
+      --card-bg: #FFFFFF;
+      --text: #1F2937;
+      --text-muted: #6B7280;
+      --border: #E5E7EB;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      width: 100%;
+      background: var(--card-bg);
+      padding: 1rem 2rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1000px;
+      padding: 2rem;
+      box-sizing: border-box;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      box-sizing: border-box;
+      font-size: 1rem;
+    }
+
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: var(--primary-hover);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: #F9FAFB;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    tr:hover {
+      background: #F9FAFB;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+    }
+
+    .error {
+      color: #DC2626;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Habit Tracker Admin</h1>
+    <button id="logoutBtn" class="hidden">Logout</button>
+  </header>
+
+  <div class="container">
+    
+    <!-- Login Section -->
+    <div id="loginSection" class="card" style="max-width: 400px; margin: 4rem auto;">
+      <h2 style="margin-top: 0;">Admin Login</h2>
+      <div id="loginError" class="error hidden"></div>
+      <form id="loginForm">
+        <input type="password" id="adminPassword" placeholder="Enter Admin Password" required>
+        <button type="submit" style="width: 100%;">Login</button>
+      </form>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboardSection" class="hidden">
+      
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="totalUsers">0</div>
+          <div class="stat-label">Total Users</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top: 0;">User List</h2>
+        <div style="overflow-x: auto;">
+          <table id="usersTable">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Plan</th>
+                <th>Habits Count</th>
+                <th>Joined</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const loginSection = document.getElementById('loginSection');
+    const dashboardSection = document.getElementById('dashboardSection');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    // API configuration to handle different host ports if needed
+    const apiBase = window.location.origin;
+
+    // Check if already logged in
+    const token = localStorage.getItem('admin_token');
+    if (token) {
+      showDashboard();
+      fetchStats(token);
+    }
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const password = document.getElementById('adminPassword').value;
+      loginError.classList.add('hidden');
+
+      try {
+        const res = await fetch(`${apiBase}/api/admin/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password })
+        });
+        
+        const data = await res.json();
+        
+        if (data.success) {
+          localStorage.setItem('admin_token', data.token);
+          showDashboard();
+          fetchStats(data.token);
+        } else {
+          loginError.textContent = data.error || 'Login failed';
+          loginError.classList.remove('hidden');
+        }
+      } catch (err) {
+        loginError.textContent = 'Network error occurred.';
+        loginError.classList.remove('hidden');
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('admin_token');
+      dashboardSection.classList.add('hidden');
+      logoutBtn.classList.add('hidden');
+      loginSection.classList.remove('hidden');
+      document.getElementById('adminPassword').value = '';
+    });
+
+    function showDashboard() {
+      loginSection.classList.add('hidden');
+      dashboardSection.classList.remove('hidden');
+      logoutBtn.classList.remove('hidden');
+    }
+
+    async function fetchStats(token) {
+      try {
+        const res = await fetch(`${apiBase}/api/admin/stats`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (res.status === 401) {
+          logoutBtn.click();
+          return;
+        }
+
+        const data = await res.json();
+        
+        if (data.success) {
+          document.getElementById('totalUsers').textContent = data.totalUsers;
+          
+          const tbody = document.querySelector('#usersTable tbody');
+          tbody.innerHTML = '';
+          
+          data.users.forEach(user => {
+            const tr = document.createElement('tr');
+            
+            let dateStr = 'Unknown';
+            if (user.createdAt && user.createdAt !== 'Unknown') {
+              dateStr = new Date(user.createdAt).toLocaleDateString();
+            }
+
+            tr.innerHTML = `
+              <td><strong>${escapeHtml(user.username)}</strong></td>
+              <td>${escapeHtml(user.email)}</td>
+              <td><span style="background: ${user.plan === 'pro' ? '#F59E0B' : '#E5E7EB'}; color: ${user.plan === 'pro' ? '#fff' : '#374151'}; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem;">${user.plan.toUpperCase()}</span></td>
+              <td>${user.habitCount}</td>
+              <td>${dateStr}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+      } catch (err) {
+        console.error('Failed to fetch stats:', err);
+      }
+    }
+
+    function escapeHtml(unsafe) {
+      if (!unsafe) return '';
+      return unsafe
+           .replace(/&/g, "&amp;")
+           .replace(/</g, "&lt;")
+           .replace(/>/g, "&gt;")
+           .replace(/"/g, "&quot;")
+           .replace(/'/g, "&#039;");
+    }
+  </script>
+</body>
+</html>

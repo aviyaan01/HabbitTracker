@@ -1,0 +1,53 @@
+# ===================================================================
+# HABIT TRACKER ROOT .GITIGNORE
+# Protects secrets, API keys, user databases, and build artifacts
+# ===================================================================
+
+# Environment Variables & Secrets
+**/.env
+**/.env.local
+**/.env.*.local
+**/*.env
+!**/.env.example
+
+# Production & Local User Data (Crucial for privacy)
+**/data/db.json
+**/data/*.bak
+**/data/*.tmp
+!**/data/.gitkeep
+
+# Temporary Scratch scripts & outputs
+scratch/
+**/scratch/
+
+# Keys, Keystores & Certificates
+**/*.pem
+**/*.key
+**/*.keystore
+**/*.jks
+**/*.p12
+**/*.pfx
+
+# Dependencies & Build artifacts
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+**/*.log
+
+# Android Build & Local Properties
+**/habit-tracker-android/.gradle/
+**/habit-tracker-android/build/
+**/habit-tracker-android/*/build/
+**/habit-tracker-android/local.properties
+**/habit-tracker-android/.cxx/
+**/*.apk
+**/*.aab
+
+# OS & IDE Files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.suo
+*.user

@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html class="h-full" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+  <title>Welcome Back - HabbitTracker</title>
+  <link rel="icon" href="icon-192.png" type="image/png">
+  <!-- Tailwind CSS v3 -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Google Identity Services (GIS) -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            paper: '#171210',
+            'ink-primary': '#ebe0dc',
+            'ink-muted': '#e3beb6',
+            ember: {
+              DEFAULT: '#ff5a36',
+              light: '#ff7252',
+              glow: 'rgba(255, 90, 54, 0.45)',
+              dark: '#b52603'
+            },
+            tide: {
+              DEFAULT: '#49dcc9',
+              glow: 'rgba(73, 220, 201, 0.35)'
+            }
+          },
+          boxShadow: {
+            'ember-btn': '0 8px 24px -4px rgba(255, 90, 54, 0.45), 0 2px 6px -1px rgba(255, 90, 54, 0.3)',
+            'glass-card': '0 16px 36px -10px rgba(0, 0, 0, 0.6), inset 0 1px 1px 0 rgba(255, 255, 255, 0.1)',
+            'input-glow': '0 0 0 1px rgba(255, 90, 54, 0.6), 0 0 16px rgba(255, 90, 54, 0.18)'
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Custom CSS for specialized background effects & animations -->
+  <style data-purpose="ambient-lighting">
+    .ember-radial-gradient {
+      background: radial-gradient(circle at 65% 20%, rgba(255, 90, 54, 0.22) 0%, rgba(18, 14, 12, 0) 65%);
+    }
+    .tide-radial-gradient {
+      background: radial-gradient(circle at 20% 75%, rgba(31, 194, 176, 0.12) 0%, rgba(18, 14, 12, 0) 60%);
+    }
+    .smoke-overlay {
+      background: radial-gradient(circle at 50% 35%, rgba(45, 34, 28, 0.6) 0%, rgba(18, 14, 12, 0.95) 75%);
+    }
+  </style>
+  <style data-purpose="glassmorphic-effects">
+    .glass-panel {
+      background-color: rgba(26, 20, 17, 0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-input {
+      background-color: rgba(30, 24, 20, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-input:focus {
+      background-color: rgba(36, 28, 24, 0.88);
+      border-color: #FF5A36;
+    }
+    /* Toast animation */
+    .toast-anim {
+      animation: toastSlide 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes toastSlide {
+      from { opacity: 0; transform: translate(-50%, -10px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+  </style>
+</head>
+<body class="h-full bg-paper text-ink-primary font-sans antialiased overflow-x-hidden select-none flex flex-col justify-center items-center p-0 m-0">
+
+<!-- Toast Notification -->
+<div id="toast" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-xl text-sm font-semibold glass-panel text-ink-primary shadow-2xl border border-white/10 hidden toast-anim"></div>
+
+<!-- Mobile Screen Shell Container (iOS dimensions matching mobile framing) -->
+<div class="relative w-full min-h-screen max-w-md bg-paper flex flex-col justify-between overflow-hidden shadow-2xl">
+
+  <!-- BEGIN: AmbientArtworkBackground -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden" data-purpose="dynamic-athlete-backdrop">
+    <div class="absolute inset-0 w-full h-full">
+      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2QJfRjJPnAHF4CWZ8rHm0iYwQBtIAcjpIMnmogOZ9V0K9gi26ALP36ujDTGyKedr_1K1ogs6sRR4xgoEpYZCH0Kt_9QS_bY7gPW_0ngTqTQPkeNFcVQBTwAYYSVXxlDj8eWJ4M8TsVP71py6aEUI2LuWeLEXfNSf-8cnMsoZXRid0sZmHcGkCcpKh5BFtIhawuVwAZl4RUbIyduIB88csk1mLjBQh1cizcWG31HSVOxQfwp1v_P05aK_akFiU92jd" alt="Dynamic Athlete Motion" class="w-full h-full object-cover object-center opacity-40 mix-blend-luminosity transform scale-105">
+    </div>
+    <div class="absolute inset-0 bg-[#120E0C]/60"></div>
+    <div class="absolute inset-0 ember-radial-gradient"></div>
+    <div class="absolute inset-0 tide-radial-gradient"></div>
+    <div class="absolute inset-0 smoke-overlay"></div>
+  </div>
+  <!-- END: AmbientArtworkBackground -->
+
+  <!-- BEGIN: TopBar & Branding -->
+  <header class="relative z-10 pt-16 px-6 flex items-center justify-between" data-purpose="screen-header">
+    <!-- Back / Dismiss Button -->
+    <a href="index.html" aria-label="Go back" class="w-10 h-10 rounded-full flex items-center justify-center text-ink-muted hover:text-ink-primary bg-white/[0.04] border border-white/[0.08] active:scale-95 transition-transform">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M15 18l-6-6 6-6"></path>
+      </svg>
+    </a>
+    <!-- Ember Logo Icon Mark -->
+    <a href="index.html" class="flex items-center gap-2" data-purpose="brand-mark">
+      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-ember to-ember-light p-0.5 shadow-[0_0_15px_rgba(255,90,54,0.4)] flex items-center justify-center">
+        <div class="w-full h-full bg-[#1A120E] rounded-[10px] flex items-center justify-center">
+          <!-- Flame & Tide Spark Icon -->
+          <svg class="w-4 h-4 text-ember-light" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C8.5 7 6 9.5 6 13.5C6 17.09 8.91 20 12.5 20C16.09 20 19 17.09 19 13.5C19 10.5 17 8 15 5.5C15 7.5 13.5 9 12 10C12 7.5 13 4.5 12 2Z"></path>
+          </svg>
+        </div>
+      </div>
+      <span class="text-xs font-bold tracking-[0.2em] uppercase text-ink-primary/90">HABBIT<span class="text-ember font-black">·</span>TRACKER</span>
+    </a>
+    <!-- Assistance / Help Quick Touch -->
+    <button onclick="showHelpModal()" class="text-xs font-medium text-ink-muted hover:text-ink-primary transition-colors px-2 py-1" type="button">
+      Help
+    </button>
+  </header>
+  <!-- END: TopBar & Branding -->
+
+  <!-- BEGIN: MainContent Area -->
+  <main class="relative z-10 px-6 pt-6 pb-4 flex-1 flex flex-col justify-center">
+    <!-- Headline & Subtitle Block -->
+    <section class="text-center mb-7" data-purpose="hero-title">
+      <h1 id="screenTitle" class="text-[28px] sm:text-[32px] font-extrabold tracking-[0.14em] uppercase text-ink-primary drop-shadow-sm leading-tight">
+        WELCOME BACK
+      </h1>
+      <p id="screenSubtitle" class="mt-2 text-sm font-normal text-ink-muted max-w-[280px] mx-auto tracking-normal">
+        Welcome back! Please enter your details.
+      </p>
+    </section>
+
+    <!-- Glassmorphic Login Card -->
+    <section class="glass-panel rounded-2xl p-6 shadow-glass-card" data-purpose="login-form-container">
+      <form id="authForm" class="space-y-4" onsubmit="handleAuthSubmit(event)">
+        
+        <!-- Email Input Field Group -->
+        <div data-purpose="field-email">
+          <label id="emailLabel" class="block text-xs font-medium uppercase tracking-wider text-ink-primary/90 mb-1.5" for="email">
+            Email or Username
+          </label>
+          <div class="relative flex items-center">
+            <!-- Leading Icon: Envelope -->
+            <div class="absolute left-3.5 pointer-events-none text-ink-muted">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <input class="glass-input w-full h-12 pl-11 pr-4 rounded-xl text-sm text-ink-primary placeholder:text-ink-muted/70 focus:outline-none focus:ring-1 focus:ring-ember" id="email" name="email" placeholder="e.g. anvvi01 or anvvi01@gmail.com" required autocomplete="username" type="text">
+          </div>
+        </div>
+
+        <!-- Username Input Field Group (for Sign Up mode) -->
+        <div id="usernameGroup" class="hidden" data-purpose="field-username">
+          <label class="block text-xs font-medium uppercase tracking-wider text-ink-primary/90 mb-1.5" for="username">
+            Username
+          </label>
+          <div class="relative flex items-center">
+            <!-- Leading Icon: User/Person Outline -->
+            <div class="absolute left-3.5 pointer-events-none text-ink-muted">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <input class="glass-input w-full h-12 pl-11 pr-11 rounded-xl text-sm text-ink-primary placeholder:text-ink-muted/70 focus:outline-none focus:ring-1 focus:ring-ember transition-all" id="username" name="username" placeholder="e.g. anvvi01" autocomplete="username" type="text" oninput="handleLoginUsernameInput()" onblur="handleLoginUsernameBlur()">
+            <div id="login-username-icon" class="absolute right-3.5 hidden items-center justify-center pointer-events-none text-xs"></div>
+          </div>
+          <div id="login-username-feedback" class="hidden text-xs mt-1.5 font-medium leading-tight"></div>
+        </div>
+
+        <!-- Password Input Field Group -->
+        <div data-purpose="field-password">
+          <label class="block text-xs font-medium uppercase tracking-wider text-ink-primary/90 mb-1.5" for="password">
+            Password
+          </label>
+          <div class="relative flex items-center">
+            <!-- Leading Icon: Lock -->
+            <div class="absolute left-3.5 pointer-events-none text-ink-muted">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <input class="glass-input w-full h-12 pl-11 pr-11 rounded-xl text-sm text-ink-primary tracking-widest placeholder:tracking-normal placeholder:text-ink-muted/70 focus:outline-none focus:ring-1 focus:ring-ember font-mono" id="password" name="password" placeholder="••••••••••••" required autocomplete="current-password" type="password">
+            <!-- Trailing Icon: Toggle Visibility -->
+            <button aria-label="Toggle password visibility" class="absolute right-3.5 text-ink-muted hover:text-ink-primary focus:outline-none p-1" data-purpose="password-visibility-toggle" id="togglePassword" type="button">
+              <!-- Eye Icon -->
+              <svg class="w-5 h-5" fill="none" id="eyeIcon" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Confirm Password Field (Only for Sign Up mode) -->
+        <div id="confirmPasswordGroup" class="hidden" data-purpose="field-confirm-password">
+          <label class="block text-xs font-medium uppercase tracking-wider text-ink-primary/90 mb-1.5" for="confirmPassword">
+            Confirm Password
+          </label>
+          <div class="relative flex items-center">
+            <div class="absolute left-3.5 pointer-events-none text-ink-muted">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <input class="glass-input w-full h-12 pl-11 pr-11 rounded-xl text-sm text-ink-primary tracking-widest placeholder:tracking-normal placeholder:text-ink-muted/70 focus:outline-none focus:ring-1 focus:ring-ember font-mono" id="confirmPassword" name="confirmPassword" placeholder="••••••••••••" autocomplete="new-password" type="password">
+            <!-- Trailing Icon: Toggle Confirm Visibility -->
+            <button aria-label="Toggle confirm password visibility" class="absolute right-3.5 text-ink-muted hover:text-ink-primary focus:outline-none p-1" data-purpose="confirm-password-visibility-toggle" id="toggleConfirmPassword" type="button">
+              <!-- Eye Icon -->
+              <svg class="w-5 h-5" fill="none" id="confirmEyeIcon" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Options Row: Remember Me Checkbox & Forgot Password Link -->
+        <div id="optionsRow" class="flex items-center justify-between pt-1 pb-1" data-purpose="form-auxiliary-actions">
+          <!-- Custom Styled Checkbox -->
+          <label class="flex items-center space-x-2.5 cursor-pointer select-none">
+            <input class="w-4 h-4 rounded bg-[#1D1714] border-white/20 text-ember focus:ring-ember focus:ring-offset-0 focus:ring-opacity-40 transition-colors" id="remember" name="remember" type="checkbox" checked>
+            <span class="text-xs text-ink-muted hover:text-ink-primary transition-colors">Remember me</span>
+          </label>
+          <!-- Forgot Password Link -->
+          <a onclick="showForgotPassword()" class="text-xs font-medium text-ember hover:text-ember-light hover:underline transition-colors focus:outline-none cursor-pointer" href="#forgot">
+            Forgot password?
+          </a>
+        </div>
+
+        <!-- Primary Submit Button -->
+        <div class="pt-2">
+          <button id="submitBtn" class="w-full h-12 bg-gradient-to-r from-ember to-ember-light text-ink-primary text-sm font-bold uppercase tracking-wider rounded-xl shadow-ember-btn hover:brightness-110 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 group" type="submit">
+            <span id="submitBtnText">Sign in</span>
+            <svg class="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Divider with Subtle Glow -->
+        <div class="relative flex py-2 items-center">
+          <div class="flex-grow border-t border-white/[0.08]"></div>
+          <span class="flex-shrink mx-3 text-[11px] uppercase tracking-widest text-ink-muted/60">or</span>
+          <div class="flex-grow border-t border-white/[0.08]"></div>
+        </div>
+
+        <!-- Social Sign-in Button: Google -->
+        <div>
+          <button onclick="handleGoogleSignIn()" class="w-full h-12 bg-white/[0.04] hover:bg-white/[0.08] active:bg-white/[0.02] border border-white/[0.1] rounded-xl text-ink-primary text-xs font-semibold tracking-wide flex items-center justify-center space-x-3 transition-colors active:scale-[0.98]" type="button">
+            <!-- Google G Logo SVG -->
+            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"></path>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"></path>
+            </svg>
+            <span>Sign in with Google</span>
+          </button>
+        </div>
+
+      </form>
+    </section>
+  </main>
+  <!-- END: MainContent Area -->
+
+  <!-- BEGIN: Footer -->
+  <footer class="relative z-10 pb-8 pt-2 px-6 text-center" data-purpose="screen-footer">
+    <p class="text-xs text-ink-muted">
+      <span id="footerPrompt">Don't have an account?</span>
+      <button id="toggleAuthBtn" onclick="toggleAuthMode()" class="font-semibold text-ember hover:text-ember-light transition-colors ml-1 inline-flex items-center gap-0.5 cursor-pointer underline decoration-ember/40 hover:decoration-ember">
+        Sign up for free!
+      </button>
+    </p>
+    <div class="mt-2 text-center">
+      <a href="index.html" class="text-[11px] text-ink-muted/70 hover:text-ink-primary transition-colors">
+        Continue as Guest →
+      </a>
+    </div>
+    <!-- iOS Home Indicator Spacing Standard -->
+    <div class="mt-4 mx-auto w-32 h-1 bg-white/10 rounded-full"></div>
+  </footer>
+  <!-- END: Footer -->
+
+</div>
+
+<!-- JavaScript: Password Visibility & Auth Handlers -->
+<script>
+  function getApiBase() {
+    if (window.__ENV__ && window.__ENV__.API_BASE) return window.__ENV__.API_BASE;
+    const override = localStorage.getItem('habbittracker_api_base');
+    if (override) return override;
+    if (window.location.protocol === 'file:') return 'http://10.0.2.2:3000';
+    if (window.location.hostname === '10.0.2.2') return 'http://10.0.2.2:3000';
+    if (window.location.origin && window.location.origin.startsWith('http')) {
+      if (window.location.port && window.location.port !== '3000') {
+        return `${window.location.protocol}//${window.location.hostname}:3000`;
+      }
+      return window.location.origin;
+    }
+    return 'http://10.0.2.2:3000';
+  }
+  const API_BASE = getApiBase();
+
+  // Toggle Password Visibility
+  const toggleBtn = document.getElementById('togglePassword');
+  const passwordInput = document.getElementById('password');
+  const eyeIcon = document.getElementById('eyeIcon');
+
+  if (toggleBtn && passwordInput) {
+    toggleBtn.addEventListener('click', () => {
+      const isPassword = passwordInput.getAttribute('type') === 'password';
+      passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+      
+      if (isPassword) {
+        eyeIcon.innerHTML = `
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+        `;
+        eyeIcon.classList.add('text-ember');
+      } else {
+        eyeIcon.innerHTML = `
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        `;
+        eyeIcon.classList.remove('text-ember');
+      }
+    });
+  }
+
+  // Toggle Confirm Password Visibility
+  const toggleConfirmBtn = document.getElementById('toggleConfirmPassword');
+  const confirmPasswordInput = document.getElementById('confirmPassword');
+  const confirmEyeIcon = document.getElementById('confirmEyeIcon');
+
+  if (toggleConfirmBtn && confirmPasswordInput) {
+    toggleConfirmBtn.addEventListener('click', () => {
+      const isPassword = confirmPasswordInput.getAttribute('type') === 'password';
+      confirmPasswordInput.setAttribute('type', isPassword ? 'text' : 'password');
+      
+      if (isPassword) {
+        confirmEyeIcon.innerHTML = `
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+        `;
+        confirmEyeIcon.classList.add('text-ember');
+      } else {
+        confirmEyeIcon.innerHTML = `
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        `;
+        confirmEyeIcon.classList.remove('text-ember');
+      }
+    });
+  }
+
+  let loginUsernameTimer = null;
+
+  function resetLoginUsernameFeedback() {
+    const inputEl = document.getElementById('username');
+    const feedbackEl = document.getElementById('login-username-feedback');
+    const iconEl = document.getElementById('login-username-icon');
+    if (inputEl) {
+      inputEl.classList.remove('border-red-500', 'border-emerald-500');
+      inputEl.style.borderColor = '';
+      inputEl.style.boxShadow = '';
+    }
+    if (feedbackEl) {
+      feedbackEl.classList.add('hidden');
+      feedbackEl.textContent = '';
+    }
+    if (iconEl) {
+      iconEl.classList.add('hidden');
+      iconEl.classList.remove('flex');
+      iconEl.innerHTML = '';
+    }
+  }
+
+  async function checkLoginUsernameAvailability() {
+    const inputEl = document.getElementById('username');
+    const feedbackEl = document.getElementById('login-username-feedback');
+    const iconEl = document.getElementById('login-username-icon');
+    if (!inputEl) return;
+
+    const rawVal = inputEl.value.trim();
+    if (!rawVal) {
+      resetLoginUsernameFeedback();
+      return;
+    }
+
+    let normalizedUser = rawVal.toLowerCase();
+    if (normalizedUser.includes('@')) {
+      normalizedUser = normalizedUser.split('@')[0].replace(/[^a-zA-Z0-9_]/g, '');
+    }
+
+    const usernameRegex = /^[a-zA-Z0-9_]{3,15}$/;
+    if (!usernameRegex.test(normalizedUser)) {
+      inputEl.style.borderColor = '#ef4444';
+      inputEl.style.boxShadow = '0 0 0 1px #ef4444';
+      if (iconEl) {
+        iconEl.classList.remove('hidden');
+        iconEl.classList.add('flex');
+        iconEl.innerHTML = `<span class="text-red-400 font-bold text-sm">✕</span>`;
+      }
+      if (feedbackEl) {
+        feedbackEl.classList.remove('hidden');
+        feedbackEl.className = 'text-xs mt-1.5 font-medium leading-tight text-red-400';
+        feedbackEl.textContent = 'Username must be 3-15 characters (letters, numbers, underscore).';
+      }
+      return false;
+    }
+
+    if (iconEl) {
+      iconEl.classList.remove('hidden');
+      iconEl.classList.add('flex');
+      iconEl.innerHTML = `<span class="inline-block w-3 h-3 border-2 border-white/40 border-t-transparent rounded-full animate-spin"></span>`;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/check-username?username=${encodeURIComponent(normalizedUser)}`);
+      const data = await res.json();
+
+      if (inputEl.value.trim().toLowerCase() !== rawVal.toLowerCase()) return;
+
+      if (data.available) {
+        inputEl.style.borderColor = '#10b981';
+        inputEl.style.boxShadow = '0 0 0 1px rgba(16,185,129,0.4)';
+        if (iconEl) {
+          iconEl.classList.remove('hidden');
+          iconEl.classList.add('flex');
+          iconEl.innerHTML = `<span class="text-emerald-400 font-bold text-sm">✓</span>`;
+        }
+        if (feedbackEl) {
+          feedbackEl.classList.remove('hidden');
+          feedbackEl.className = 'text-xs mt-1.5 font-medium leading-tight text-emerald-400';
+          feedbackEl.textContent = '✓ Username available';
+        }
+        return true;
+      } else {
+        inputEl.style.borderColor = '#ef4444';
+        inputEl.style.boxShadow = '0 0 0 1px #ef4444';
+        if (iconEl) {
+          iconEl.classList.remove('hidden');
+          iconEl.classList.add('flex');
+          iconEl.innerHTML = `<span class="text-red-400 font-bold text-sm">✕</span>`;
+        }
+        if (feedbackEl) {
+          feedbackEl.classList.remove('hidden');
+          feedbackEl.className = 'text-xs mt-1.5 font-medium leading-tight text-red-400';
+          feedbackEl.textContent = data.error || 'Username is already taken';
+        }
+        return false;
+      }
+    } catch (err) {
+      console.error('Username check error:', err);
+    }
+  }
+
+  function handleLoginUsernameInput() {
+    clearTimeout(loginUsernameTimer);
+    loginUsernameTimer = setTimeout(() => {
+      checkLoginUsernameAvailability();
+    }, 300);
+  }
+
+  function handleLoginUsernameBlur() {
+    clearTimeout(loginUsernameTimer);
+    checkLoginUsernameAvailability();
+  }
+
+  // Toggle between Login and Register
+  function toggleAuthMode() {
+    resetLoginUsernameFeedback();
+    authMode = authMode === 'login' ? 'register' : 'login';
+    const screenTitle = document.getElementById('screenTitle');
+    const screenSubtitle = document.getElementById('screenSubtitle');
+    const emailLabel = document.getElementById('emailLabel');
+    const emailInput = document.getElementById('email');
+    const usernameGroup = document.getElementById('usernameGroup');
+    const usernameInput = document.getElementById('username');
+    const confirmGroup = document.getElementById('confirmPasswordGroup');
+    const optionsRow = document.getElementById('optionsRow');
+    const submitBtnText = document.getElementById('submitBtnText');
+    const footerPrompt = document.getElementById('footerPrompt');
+    const toggleAuthBtn = document.getElementById('toggleAuthBtn');
+
+    if (authMode === 'register') {
+      screenTitle.textContent = 'CREATE ACCOUNT';
+      screenSubtitle.textContent = 'Join HabbitTracker. Start building lasting habits.';
+      if (emailLabel) emailLabel.textContent = 'EMAIL';
+      if (emailInput) {
+        emailInput.type = 'email';
+        emailInput.placeholder = 'e.g. anvvi01@gmail.com';
+      }
+      if (usernameGroup) usernameGroup.classList.remove('hidden');
+      if (usernameInput) usernameInput.required = true;
+      confirmGroup.classList.remove('hidden');
+      optionsRow.classList.add('hidden');
+      submitBtnText.textContent = 'Create Account';
+      footerPrompt.textContent = 'Already have an account?';
+      toggleAuthBtn.textContent = 'Sign in here!';
+    } else {
+      screenTitle.textContent = 'WELCOME BACK';
+      screenSubtitle.textContent = 'Welcome back! Please enter your details.';
+      if (emailLabel) emailLabel.textContent = 'EMAIL OR USERNAME';
+      if (emailInput) {
+        emailInput.type = 'text';
+        emailInput.placeholder = 'e.g. anvvi01 or anvvi01@gmail.com';
+      }
+      if (usernameGroup) usernameGroup.classList.add('hidden');
+      if (usernameInput) usernameInput.required = false;
+      confirmGroup.classList.add('hidden');
+      optionsRow.classList.remove('hidden');
+      submitBtnText.textContent = 'Sign in';
+      footerPrompt.textContent = "Don't have an account?";
+      toggleAuthBtn.textContent = 'Sign up for free!';
+    }
+  }
+
+  // Toast helper
+  function showToast(msg, duration = 3000) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.remove('hidden');
+    setTimeout(() => {
+      toast.classList.add('hidden');
+    }, duration);
+  }
+
+  // Help modal
+  function showHelpModal() {
+    alert("HabbitTracker Support:\n\n• Enter your email and username (3-15 alphanumeric characters) and password.\n• Habits and streaks sync securely across devices when signed in.\n• Click 'Continue as Guest' to track habits offline on this device.");
+  }
+
+  // Forgot Password modal
+  function showForgotPassword() {
+    const email = prompt("Enter your username or email to receive reset instructions:");
+    if (email) {
+      showToast(`Password reset link sent to ${email} (simulated).`);
+    }
+  }
+
+  // Handle Form Submit
+  async function handleAuthSubmit(e) {
+    e.preventDefault();
+    const emailInput = document.getElementById('email');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const confirmInput = document.getElementById('confirmPassword');
+    const submitBtn = document.getElementById('submitBtn');
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    if (!email || !password) {
+      showToast('Please fill in all required fields.');
+      return;
+    }
+
+    let payload = {};
+
+    if (authMode === 'register') {
+      const username = usernameInput ? usernameInput.value.trim() : '';
+      if (!email.includes('@')) {
+        showToast('Please enter a valid email address.');
+        return;
+      }
+      if (!username) {
+        showToast('Please enter a username.');
+        return;
+      }
+      const usernameRegex = /^[a-zA-Z0-9_]{3,15}$/;
+      if (!usernameRegex.test(username)) {
+        showToast('Username must be 3-15 alphanumeric characters or underscore.');
+        return;
+      }
+      if (password.length < 4) {
+        showToast('Password must be at least 4 characters long.');
+        return;
+      }
+      const confirmPass = confirmInput.value.trim();
+      if (password !== confirmPass) {
+        showToast('Passwords do not match!');
+        return;
+      }
+      payload = { email, username, password };
+    } else {
+      payload = { username: email, password };
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.classList.add('opacity-70');
+
+    const endpoint = authMode === 'login' ? `${API_BASE}/api/auth/login` : `${API_BASE}/api/auth/register`;
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        if (data.token) {
+          localStorage.setItem('habbittracker_token', data.token);
+        }
+        localStorage.setItem('habbittracker_user', data.username);
+        localStorage.setItem('currentUser', data.username);
+        if (data.plan) {
+          localStorage.setItem('habbittracker_plan', data.plan);
+        }
+        showToast(`🔓 ${authMode === 'login' ? 'Logged in' : 'Account created'} successfully! Redirecting...`);
+        setTimeout(() => { window.location.href = 'index.html?tab=daily'; }, 800);
+      } else {
+        if (res.status === 409 && authMode === 'register') {
+          const userInp = document.getElementById('username');
+          const feedback = document.getElementById('login-username-feedback');
+          const icon = document.getElementById('login-username-icon');
+          if (userInp) {
+            userInp.style.borderColor = '#ef4444';
+            userInp.style.boxShadow = '0 0 0 1px #ef4444';
+            userInp.focus();
+          }
+          if (icon) {
+            icon.classList.remove('hidden');
+            icon.classList.add('flex');
+            icon.innerHTML = `<span class="text-red-400 font-bold text-sm">✕</span>`;
+          }
+          if (feedback) {
+            feedback.classList.remove('hidden');
+            feedback.className = 'text-xs mt-1.5 font-medium leading-tight text-red-400';
+            feedback.textContent = data.error || 'Username is already taken';
+          }
+          showToast(`⚠️ ${data.error || 'This username is already taken. Please try another one.'}`);
+          return;
+        }
+        showToast(`⚠️ ${data.error || 'Authentication failed'}`);
+      }
+    } catch (err) {
+      showToast('⚠️ Network error communicating with server.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('opacity-70');
+    }
+  }
+
+  // Handle Google Sign-in
+  let googleClientInitialized = false;
+  let googleTokenClient = null;
+
+  async function handleGoogleSignIn() {
+    // 1. Check if running inside Android WebView with Native Google Bridge
+    if (window.AndroidBridge && window.AndroidBridge.signInWithGoogle) {
+      showToast('🔄 Opening Google Account selector...', 2000);
+      window.AndroidBridge.signInWithGoogle();
+      return;
+    }
+
+    try {
+      // 2. Fetch public client configuration from server (reads dynamically from .env)
+      let clientId = '';
+      try {
+        const res = await fetch(`${API_BASE}/api/config`);
+        if (res.ok) {
+          const config = await res.json().catch(() => ({}));
+          if (config.googleClientId) clientId = config.googleClientId;
+        }
+      } catch (cfgErr) {
+        console.warn('Could not fetch server config:', cfgErr);
+      }
+
+      if (!clientId) {
+        showToast('ℹ️ Please configure GOOGLE_CLIENT_ID in your .env file to activate Google Sign-In.');
+        return;
+      }
+
+      // Check for raw IP address access (Google OAuth strictly prohibits IP origins and throws Error 400 origin_mismatch)
+      const hostname = window.location.hostname;
+      const isIpAddress = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/.test(hostname);
+      if (isIpAddress && hostname !== '127.0.0.1') {
+        showToast('⚠️ Google OAuth লোকাল IP (192.168.x.x) সমর্থন করে না। অনুগ্রহ করে Email ও Password দিয়ে Sign in / Sign up করুন।', 8000);
+        return;
+      }
+
+      if (typeof google === 'undefined' || !google.accounts) {
+        showToast('⚠️ Google service is loading. Please check your internet connection.');
+        return;
+      }
+
+      // Initialize One-Tap (GIS)
+      if (google.accounts.id && !googleClientInitialized) {
+        google.accounts.id.initialize({
+          client_id: clientId,
+          callback: handleGoogleCredentialResponse,
+          auto_select: false,
+          cancel_on_tap_outside: true
+        });
+        googleClientInitialized = true;
+      }
+
+      // Initialize OAuth2 Popup Client for explicit button clicks
+      if (google.accounts.oauth2 && !googleTokenClient) {
+        googleTokenClient = google.accounts.oauth2.initTokenClient({
+          client_id: clientId,
+          scope: 'email profile openid',
+          callback: async (tokenResponse) => {
+            if (tokenResponse.error) {
+              console.warn('OAuth2 Popup Error:', tokenResponse.error);
+              if (tokenResponse.error !== 'popup_closed_by_user') {
+                showToast('⚠️ Google sign-in was cancelled or encountered an issue.');
+              }
+              return;
+            }
+            showToast('🔄 Verifying Google profile...');
+            try {
+              const userInfoRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                headers: { 'Authorization': `Bearer ${tokenResponse.access_token}` }
+              });
+              const userInfo = await userInfoRes.json();
+              if (userInfo && userInfo.email) {
+                await sendVerifiedGoogleAuth({
+                  access_token: tokenResponse.access_token,
+                  email: userInfo.email,
+                  name: userInfo.name || userInfo.given_name || '',
+                  sub: userInfo.sub
+                });
+              } else {
+                showToast('❌ Could not retrieve email from Google.');
+              }
+            } catch (err) {
+              showToast('⚠️ Failed to fetch Google profile.');
+            }
+          }
+        });
+      }
+
+      // Trigger OAuth2 Account Chooser popup on button click
+      if (googleTokenClient) {
+        googleTokenClient.requestAccessToken({ prompt: 'select_account' });
+      } else if (google.accounts.id) {
+        google.accounts.id.prompt();
+      }
+    } catch (err) {
+      console.error('Google Sign-In Error:', err);
+      showToast('⚠️ Could not connect to Google Sign-In service.');
+    }
+  }
+
+  async function sendVerifiedGoogleAuth(authPayload) {
+    showToast('🔄 Signing in with Google...');
+
+    // Extract user identity for offline local-first resilience
+    let userEmail = authPayload.email || '';
+    let userName = authPayload.name || '';
+    if (!userEmail && authPayload.credential && typeof authPayload.credential === 'string') {
+      try {
+        const parts = authPayload.credential.split('.');
+        if (parts.length === 3) {
+          const base64Url = parts[1];
+          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+          const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          }).join(''));
+          const payloadObj = JSON.parse(jsonPayload);
+          userEmail = payloadObj.email || '';
+          userName = payloadObj.name || payloadObj.given_name || '';
+        }
+      } catch (e) {
+        try {
+          const parts = authPayload.credential.split('.');
+          const payloadObj = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+          userEmail = payloadObj.email || '';
+          userName = payloadObj.name || payloadObj.given_name || '';
+        } catch (e2) {}
+      }
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/google`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(authPayload)
+      });
+      const data = await res.json();
+      if (data.success && data.token) {
+        localStorage.setItem('habbittracker_token', data.token);
+        localStorage.setItem('currentUser', data.username);
+        showToast(`🎉 Welcome, ${data.username}! Redirecting...`);
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 600);
+        return;
+      } else {
+        showToast(`❌ ${data.error || 'Google authentication failed.'}`);
+        return;
+      }
+    } catch (err) {
+      console.warn('Server connection failed during Google auth, attempting local-first offline fallback:', err);
+      if (userEmail) {
+        const localUsername = userEmail.split('@')[0].replace(/[^a-zA-Z0-9_]/g, '').slice(0, 12) || 'google_user';
+        const offlineToken = 'offline_token_' + btoa(userEmail).replace(/[^a-zA-Z0-9]/g, '').slice(0, 16) + '_' + Date.now();
+        localStorage.setItem('habbittracker_token', offlineToken);
+        localStorage.setItem('currentUser', localUsername);
+        showToast(`🎉 Welcome, ${userName || localUsername}! (Offline Session)`, 3000);
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 800);
+        return;
+      }
+      showToast('⚠️ Server connection error. Please start backend with "npm start" on port 3000.');
+    }
+  }
+
+  async function handleGoogleCredentialResponse(response) {
+    if (!response || !response.credential) {
+      showToast('⚠️ Google sign-in was cancelled.');
+      return;
+    }
+    await sendVerifiedGoogleAuth({ credential: response.credential });
+  }
+
+  // Global listener for Android Native Bridge
+  window.onAndroidGoogleSignInSuccess = async function(tokenOrEmail, name) {
+    showToast('🔄 Syncing Android Google account...');
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/google`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: tokenOrEmail, name: name || '' })
+      });
+      const data = await res.json();
+      if (data.success && data.token) {
+        localStorage.setItem('habbittracker_token', data.token);
+        localStorage.setItem('currentUser', data.username);
+        window.location.href = 'index.html';
+        return;
+      }
+    } catch (err) {
+      console.warn('Android Google sync server error, fallback to offline:', err);
+      if (tokenOrEmail && tokenOrEmail.includes('@')) {
+        const localUsername = tokenOrEmail.split('@')[0].replace(/[^a-zA-Z0-9_]/g, '').slice(0, 12) || 'google_user';
+        localStorage.setItem('habbittracker_token', 'android_offline_' + Date.now());
+        localStorage.setItem('currentUser', localUsername);
+        showToast(`🎉 Welcome, ${name || localUsername}! (Offline Session)`);
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 800);
+      }
+    }
+  };
+</script>
+
+</body>
+</html>

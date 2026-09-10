@@ -1,0 +1,33 @@
+# Environment and Secrets
+.env
+.env.local
+.env.*.local
+*.env
+!.env.example
+
+# Database & User Data (Prevent user passwords and habit data from leaking)
+data/db.json
+data/*.bak
+data/*.tmp
+!data/.gitkeep
+
+# Node dependencies & logs
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Keystores, Certificates & Private Keys
+*.pem
+*.key
+*.keystore
+*.jks
+*.p12
+*.pfx
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
