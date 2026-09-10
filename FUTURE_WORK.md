@@ -1,21 +1,21 @@
 # 🚀 HabbitTracker — Future Work & Product Roadmap
 
-> **Document Version:** 1.0.0  
-> **Last Updated:** September 2026  
-> **Target Release:** V2.0 & V3.0  
-> **Status:** Active Roadmap for Premium & Advanced Features  
+> **Document Version:** 1.0.0
+> **Last Updated:** September 2026
+> **Target Release:** V2.0 & V3.0
+> **Status:** Active Roadmap for Premium & Advanced Features
 
 ---
 
-## 📋 নির্বাহী সারাংশ (Executive Summary)
+## 📋 Executive Summary
 
-বর্তমানে **HabbitTracker**-এর কোর ইঞ্জিন (Daily Habit Tracking, Custom Scheduling, Streak Calculation, Weekly Goals, PWA Offline Support, Google Authentication, User Profiles, এবং REST API Sync) সম্পূর্ণ সচল এবং কার্যকরী। 
+The core engine of **HabbitTracker** — including Daily Habit Tracking, Custom Scheduling, Streak Calculation, Weekly Goals, PWA Offline Support, Google Authentication, User Profiles, and REST API Sync — is fully operational and functional.
 
-এই ডকুমেন্টে অ্যাপটির সমস্ত **প্রিমিয়াম (Premium / Pro)** এবং **উন্নত ফিচারসমূহ** যা পরবর্তী রিলিজগুলোতে যুক্ত করা হবে, তার পূর্ণাঙ্গ কারিগরি ও ব্যবসায়িক পরিকল্পনা বিশদভাবে লিপিবদ্ধ করা হলো।
+This document provides a complete technical and business plan for all **Premium (Pro)** and **advanced features** to be added in future releases.
 
 ---
 
-## 🗺️ ভবিষ্যৎ কাজের রোডম্যাপ (Future Roadmap by Phases)
+## 🗺️ Future Roadmap by Phases
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -38,176 +38,176 @@
 
 ---
 
-## 💎 ১. সাবস্ক্রিপশন ও পেমেন্ট গেটওয়ে ইন্টিগ্রেশন (Pro Subscriptions & Payments)
+## 💎 1. Pro Subscriptions & Payment Gateway Integration
 
-### উদ্দেশ্য
-ব্যবহারকারীদের জন্য ফ্রী ও প্রো টিয়ারের মধ্যে একটি স্বচ্ছ এবং নির্ভরযোগ্য মনেটাইজেশন মডেল প্রতিষ্ঠা করা।
+### Goal
+Establish a transparent and reliable monetization model between the Free and Pro tiers for users.
 
-### প্রস্তাবিত টায়ার ও প্রাইসিং:
-1. **Free / Standard Tier (৳০):**
-   - দৈনন্দিন হেবিট ও টাস্ক ট্র্যাকিং।
-   - বেসিক স্ট্রিক কাউন্টার ও উইকলি ভিউ।
-   - গুগল সাইন-ইন এবং ক্লাউড ব্যাকআপ।
-2. **Pro Monthly (৳১৯৯ / $১.৯৯ প্রতি মাস):**
-   - আনলিমিটেড হেবিট তৈরির সুবিধা।
-   - সম্পূর্ণ AI Habit Coach (Gemini AI Powered)।
-   - ৫২-সপ্তাহের গিটহাব স্টাইল অ্যাক্টিভিটি হিটম্যাপ।
-   - সমস্ত চ্যালেঞ্জ প্যাক আনলক।
-   - এক্সক্লুসিভ ভিজ্যুয়াল থিমস ও সাউন্ডস্কেপ।
-3. **Pro Annual (৳১,৪৯৯ / $১৪.৯৯ প্রতি বছর — ৩৭% সাশ্রয়ী):**
-   - বার্ষিক ছাড় ও প্রায়োরিটি ক্লাউড ব্যাকআপ।
-4. **Team / Family Pack (৳৯৯৯ প্রতি মাস):**
-   - সর্বোচ্চ ১০ জন সদস্যের গ্রুপ ড্যাশবোর্ড ও টিম চ্যালেঞ্জ।
+### Proposed Tiers & Pricing:
+1. **Free / Standard Tier (৳0):**
+   - Daily habit and task tracking.
+   - Basic streak counter and weekly view.
+   - Google Sign-In and cloud backup.
+2. **Pro Monthly (৳199 / $1.99 per month):**
+   - Unlimited habit creation.
+   - Full AI Habit Coach (Gemini AI Powered).
+   - 52-week GitHub-style activity heatmap.
+   - All challenge packs unlocked.
+   - Exclusive visual themes and soundscapes.
+3. **Pro Annual (৳1,499 / $14.99 per year — 37% savings):**
+   - Annual discount and priority cloud backup.
+4. **Team / Family Pack (৳999 per month):**
+   - Group dashboard and team challenges for up to 10 members.
 
-### টেকনিক্যাল ইমপ্লিমেন্টেশন:
-- **লোকাল পেমেন্ট (বাংলাদেশ):**
-  - **SSLCommerz / Shurjopay / bKash PGW:** বিকাশ, নগদ, রকেট এবং লোকাল ডেবিট/ক্রেডিট কার্ডের মাধ্যমে পেমেন্ট সম্পন্ন করা।
-  - আইপিএন (Instant Payment Notification - IPN) ওয়েবহুকের মাধ্যমে সার্ভারে ইনস্ট্যান্ট প্রো প্ল্যান অ্যাক্টিভেশন।
-- **আন্তর্জাতিক পেমেন্ট:**
-  - **Stripe Checkout & Billing:** বৈশ্বিক ব্যবহারকারীদের জন্য ক্রেডিট কার্ড ও Apple Pay/Google Pay।
-  - **Google Play In-App Billing (IAP):** অ্যান্ড্রয়েড অ্যাপের জন্য ডিজিটাল প্রোডাক্ট লাইব্রেরি (`BillingClient`).
-
----
-
-## 🤖 ২. জেমিনাই এআই হেবিট কোচ (AI Habit Coach with Google Gemini)
-
-### উদ্দেশ্য
-সাধারণ চেকলিস্ট থেকে বেরিয়ে একজন ব্যক্তিগত ডিজিটাল লাইফ কোচের মতো ব্যবহারকারীকে গাইড করা।
-
-### প্রধান ফিচারসমূহ:
-1. **ব্যক্তিগত রুটিন অ্যানালাইসিস:**
-   - ইউজারের দৈনন্দিন কমপ্লিশন প্যাটার্ন, পিক পারফরম্যান্স আওয়ার্স এবং মিসড হেবিটের কারণ বিশ্লেষণ।
-   - ব্যবহারকারীর লাইফস্টাইলের ওপর ভিত্তি করে মানানসই অভ্যাস সুপারিশ করা (যেমন: স্লিপ রুটিন, হাইড্রেশন, ডিপ ওয়ার্ক)।
-2. **ইন্টারেক্টিভ চ্যাট কোচিং (Multi-turn Conversation):**
-   - অ্যাপের ভেতরেই এআই কোচের সাথে সরাসরি কথোপকথন (যেমন: *"আজকে পড়ার সময় মন বসছে না, কী করতে পারি?"*)।
-   - জেমিনাই ইন্টারেকশন এপিআই (`@google/genai`) ও প্রম্পট ইঞ্জিনিয়ারিং এর মাধ্যমে বাস্তবসম্মত ও উৎসাহব্যঞ্জক উত্তর প্রদান।
-3. **স্মার্ট রিমাইন্ডার উইন্ডো অ্যাডজাস্টমেন্ট:**
-   - ইউজার যদি নিয়মিত কোনো অভ্যাসের নির্ধারিত সময় মিস করে, তবে এআই স্বয়ংক্রিয়ভাবে তার জন্য সুবিধাজনক নতুন সময় সাজেস্ট করবে।
+### Technical Implementation:
+- **Local Payments (Bangladesh):**
+  - **SSLCommerz / Shurjopay / bKash PGW:** Payments via bKash, Nagad, Rocket, and local debit/credit cards.
+  - Instant Pro plan activation on the server via IPN (Instant Payment Notification) webhook.
+- **International Payments:**
+  - **Stripe Checkout & Billing:** Credit card, Apple Pay, and Google Pay for global users.
+  - **Google Play In-App Billing (IAP):** Digital product library (`BillingClient`) for the Android app.
 
 ---
 
-## 📊 ৩. অ্যাডভান্সড অ্যানালিটিক্স ও হিটম্যাপ (Advanced Analytics & Heatmaps)
+## 🤖 2. Gemini AI Habit Coach
 
-### উদ্দেশ্য
-ব্যবহারকারীর দীর্ঘমেয়াদী উন্নতি ও পরিবর্তনের ভিজ্যুয়াল প্রমাণ তুলে ধরা।
+### Goal
+Move beyond a simple checklist to guide users like a personal digital life coach.
 
-### ফিচারসমূহ:
+### Key Features:
+1. **Personal Routine Analysis:**
+   - Analyze user's daily completion patterns, peak performance hours, and reasons for missed habits.
+   - Recommend suitable habits based on the user's lifestyle (e.g., sleep routine, hydration, deep work).
+2. **Interactive Chat Coaching (Multi-turn Conversation):**
+   - Direct in-app conversation with the AI coach (e.g., *"I can't focus on studying today, what should I do?"*).
+   - Realistic and motivating responses via Gemini Interactions API (`@google/genai`) and prompt engineering.
+3. **Smart Reminder Window Adjustment:**
+   - If a user regularly misses a habit's scheduled time, the AI will automatically suggest a more convenient new time.
+
+---
+
+## 📊 3. Advanced Analytics & Heatmaps
+
+### Goal
+Provide visual proof of the user's long-term progress and improvement.
+
+### Features:
 1. **GitHub-Style 52-Week Activity Heatmap:**
-   - সারা বছরের ৩৬৫ দিনের প্রতিটি দিনের কমপ্লিশন ইন্টেনসিটি (০% থেকে ১০০%) চারটি নিওন শেডে প্রদর্শন।
-2. **হেবিট কোরিলেশন ম্যাট্রিক্স (Correlation Insights):**
-   - একাধিক অভ্যাসের পারস্পরিক প্রভাব নির্ণয় (যেমন: *"যেদিন আপনি সকালে মেডিটেশন করেছেন, সেদিন আপনার প্রোডাক্টিভিটি ৪২% বেশি ছিল"*).
-3. **প্রেডিক্টিভ স্ট্রিক স্কোর (Predictive Consistency):**
-   - মেশিন লার্নিং ও হিস্টোরিক্যাল ডেটা বিশ্লেষণ করে স্ট্রিক ভাঙার ঝুঁকি আগে থেকেই চিহ্নিত করে সতর্কতা দেওয়া।
-4. **পিডিএফ / সিএসভি এক্সপোর্ট (Report Export):**
-   - মাসিক বা বাৎসরিক প্রগ্রেস সামারি সুন্দর পিডিএফ সার্টিফিকেটে ডাউনলোড করার সুবিধা।
+   - Display each day's completion intensity (0% to 100%) for all 365 days of the year in four neon shades.
+2. **Habit Correlation Matrix (Correlation Insights):**
+   - Determine the mutual impact of multiple habits (e.g., *"On days you meditated in the morning, your productivity was 42% higher"*).
+3. **Predictive Streak Score (Predictive Consistency):**
+   - Analyze machine learning and historical data to identify streak-breaking risks in advance and issue warnings.
+4. **PDF / CSV Export (Report Export):**
+   - Option to download a monthly or yearly progress summary as a nicely formatted PDF certificate.
 
 ---
 
-## 🏆 ৪. চ্যালেঞ্জ প্যাকস ও সোশ্যাল স্ট্রিকস (Community Challenges & Cohorts)
+## 🏆 4. Community Challenges & Cohorts
 
-### উদ্দেশ্য
-সোশ্যাল দায়বদ্ধতা ও গেমিফিকেশনের মাধ্যমে অভ্যাস ধরে রাখার আগ্রহ বহুগুণ বৃদ্ধি করা।
+### Goal
+Multiply the motivation to maintain habits through social accountability and gamification.
 
-### ফিচারসমূহ:
-1. **কিউরেটেড চ্যালেঞ্জ প্যাকস:**
-   - ২১-দিনের ফিটনেস বুট ক্যাম্প (`21-Day Fitness Reset`)।
-   - ৩০-দিনের ডিজিটাল ডিটক্স ও মাইন্ডফুলনেস (`30-Day Mindfulness`).
-   - ৭-দিনের মর্নিং হাইড্রেটিং বুস্ট।
-2. **ফ্রেন্ডস লিডারবোর্ড ও কোহোর্টস:**
-   - বন্ধুদের সাথে যৌথ চ্যালেঞ্জ শুরু করা ও রিয়েল-টাইম লিডারবোর্ড।
-3. **সোশ্যাল স্ট্রিক কার্ড জেনারেটর:**
-   - ইনস্টাগ্রাম, ফেসবুক স্টোরি বা হোয়াটসঅ্যাপে শেয়ার করার জন্য কাস্টম ব্যাকগ্রাউন্ড ও ফটো সহ স্ট্রিক শেয়ারিং কার্ড।
-
----
-
-## 🎁 ৫. রেফারেল ও ইনসেন্টিভ প্রোগ্রাম (Referral & Rewards Engine)
-
-### ফিচারসমূহ:
-1. **রেফারেল কোড জেনারেশন:** প্রতিটি ইউজারের জন্য স্বয়ংক্রিয় ইউনিক কোড (যেমন: `HT-X89B2`).
-2. **রিওয়ার্ড লজিক:**
-   - বন্ধু কোড ব্যবহার করে সাইন-আপ করলে দুজনেই ১ মাসের প্রো ফিচার ফ্রী পাবে।
-3. **অ্যাচিভমেন্ট ট্রফি ও মেডেল সিস্টেম:**
-   - ৭-দিন, ৩০-দিন, ১০০-দিন ও ৩৬৫-দিনের স্ট্রিকে এক্সক্লুসিভ ডিজিটাল মেডেল।
+### Features:
+1. **Curated Challenge Packs:**
+   - 21-day Fitness Boot Camp (`21-Day Fitness Reset`).
+   - 30-day Digital Detox and Mindfulness (`30-Day Mindfulness`).
+   - 7-day Morning Hydration Boost.
+2. **Friends Leaderboard & Cohorts:**
+   - Start joint challenges with friends and a real-time leaderboard.
+3. **Social Streak Card Generator:**
+   - Custom background and photo streak sharing card for Instagram, Facebook Stories, or WhatsApp.
 
 ---
 
-## 🔔 ৬. পুশ নোটিফিকেশন ও অ্যালার্ম (Push Notifications via FCM)
+## 🎁 5. Referral & Rewards Engine
 
-### উদ্দেশ্য
-অ্যাপ বন্ধ থাকলেও ব্যবহারকারী যেন যথাসময়ে তার অভ্যাসের কথা মনে করতে পারেন।
+### Features:
+1. **Referral Code Generation:** Automatic unique code for each user (e.g., `HT-X89B2`).
+2. **Reward Logic:**
+   - When a friend signs up using a referral code, both users receive 1 month of Pro features for free.
+3. **Achievement Trophy & Medal System:**
+   - Exclusive digital medals for 7-day, 30-day, 100-day, and 365-day streaks.
 
-### ফিচারসমূহ:
+---
+
+## 🔔 6. Push Notifications via FCM
+
+### Goal
+Ensure users can remember their habits on time, even when the app is closed.
+
+### Features:
 1. **Firebase Cloud Messaging (FCM) Integration:**
-   - ব্যাকগ্রাউন্ড পুশ নোটিফিকেশন যা স্ক্রিন অফ থাকা অবস্থাতেও কাজ করবে।
-2. **ইন্টেলিজেন্ট নজ (Intelligent Nudge):**
-   - রাতে ঘুমানোর পূর্বে দিনের অসমাপ্ত অভ্যাসগুলোর মৃদু স্মারক।
-3. **অডিও কাইমস ও হ্যাপটিক ফিডব্যাক:**
-   - মোবাইল ডিভাইসে কমপ্লিট বাটনে চাপ দিলে মৃদু ভাইব্রেশন (Haptic) এবং তৃপ্তিদায়ক সাউন্ড ইফেক্ট।
+   - Background push notifications that work even when the screen is off.
+2. **Intelligent Nudge:**
+   - A gentle reminder of incomplete habits for the day before the user goes to sleep at night.
+3. **Audio Chimes & Haptic Feedback:**
+   - Subtle vibration (haptic) and a satisfying sound effect when the complete button is tapped on a mobile device.
 
 ---
 
-## 📱 ৭. মোবাইল অ্যাপ সম্প্রসারণ (Native Android & iOS Stores)
+## 📱 7. Native Android & iOS Store Releases
 
-### ফিচারসমূহ:
+### Features:
 1. **Google Play Store Release:**
-   - `habit-tracker-android` প্রজেক্টকে প্রোডাকশন কীস্টোর দিয়ে সাইন করে `.aab` (Android App Bundle) বিল্ড তৈরি।
-   - গুগল প্লে কনসোলে সাবমিশন ও পাবলিশিং।
-2. **হোম স্ক্রিন উইজেটস (Home Screen Widgets):**
-   - অ্যান্ড্রয়েড Glance / RemoteViews ব্যবহার করে ফোনের হোম স্ক্রিনেই আজকের হেবিট চেকলিস্ট ও স্ট্রিক ডিসপ্লে।
+   - Sign the `habit-tracker-android` project with a production keystore and create an `.aab` (Android App Bundle) build.
+   - Submit and publish on the Google Play Console.
+2. **Home Screen Widgets:**
+   - Display today's habit checklist and streak directly on the phone's home screen using Android Glance / RemoteViews.
 3. **iOS App Store Release:**
-   - Capacitor বা Swift Wrapper এর মাধ্যমে আইফোনের জন্য অ্যাপ স্টোরে অবমুক্তকরণ।
+   - Release on the App Store for iPhone via Capacitor or a Swift Wrapper.
 
 ---
 
 ## 💬 Phase X: Direct Messaging & Chat System (Real-Time Communication)
 
-### উদ্দেশ্য
-ব্যবহারকারীদের তাদের অভ্যাসের সাথীদের (Habit Accountability Partners / Friends) সাথে রিয়েল-টাইমে যোগাযোগ, উৎসাহ প্রদান এবং পারস্পরিক অভিজ্ঞতা ভাগ করে নেওয়ার জন্য একটি সুরক্ষিত ও প্রাইভেট মেসেজিং প্ল্যাটফর্ম গড়ে তোলা।
+### Goal
+Build a secure and private messaging platform for users to communicate, encourage each other, and share experiences with their habit accountability partners / friends in real time.
 
-### টেকনিক্যাল আর্কিটেকচার (Technical Architecture):
-1. **ডুপ্লেক্স ট্রান্সপোর্ট লেয়ার (WebSocket / SSE):**
-   - **Socket.io / ws:** লো-লেটেন্সি বাই-ডিরেকশনাল সকেট কানেকশন। ইউজার অনলাইন/অফলাইন প্রেজেন্স ডিটেকশন ও টাইপিং ইন্ডিকেটর।
-   - কানেকশন হ্যান্ডশেকে JWT অথেনটিকেশন টোকেন যাচাই করে সুরক্ষিত সকেট অথেনটিকেশন।
-2. **এন্ড-টু-এন্ড প্রাইভেসি ও এনক্রিপশন (E2E Encryption Concept):**
-   - **Web Cryptography API (SubtleCrypto):** ক্লায়েন্ট ব্রাউজারে পাবলিক/প্রাইভেট কি পেয়ার (ECDH / AES-GCM-256) তৈরি করে ফ্রেন্ডদের মাঝে এন্ড-টু-এন্ড মেসেজ এনক্রিপশন।
-   - সার্ভার শুধুমাত্র সিফারটেক্সট (Ciphertext) রিলে করবে; কোনো প্লেইনটেক্সট মেসেজ সার্ভারের ডেটাবেসে সংরক্ষিত হবে না।
-3. **এফিমেরাল ও লোকাল স্টোরেজ ক্যাশিং (Storage Model):**
-   - ব্রাউজারের **IndexedDB** ব্যবহার করে লোকাল চ্যাট হিস্ট্রি ক্যাশিং।
-   - ব্যবহারকারী চাইলে যেকোনো সময় চ্যাট হিস্ট্রি ক্লিয়ার বা ব্যাকআপ নেওয়ার সুবিধা।
-4. **হেবিট শেয়ারিং স্ন্যাপশট ও ইন্টিগ্রেশন:**
-   - চ্যাটের ভেতরেই সহজে এক ক্লিকে নিজের আজকের দিনের কমপ্লিশন কার্ড (Habit Progress Bubble) মেসেজ আকারে পাঠানো।
-   - ফ্রেন্ডের স্ট্রিক মাইলস্টোনে স্বয়ংক্রিয় সেলিব্রেশন কার্ড (`"🎉 Shashwoto just hit a 14-day streak on Read Book!"`)।
+### Technical Architecture:
+1. **Duplex Transport Layer (WebSocket / SSE):**
+   - **Socket.io / ws:** Low-latency bidirectional socket connection. User online/offline presence detection and typing indicator.
+   - Secure socket authentication by verifying JWT authentication tokens at the connection handshake.
+2. **End-to-End Privacy & Encryption (E2E Encryption Concept):**
+   - **Web Cryptography API (SubtleCrypto):** Create public/private key pairs (ECDH / AES-GCM-256) in the client browser for end-to-end message encryption between friends.
+   - The server will only relay ciphertext; no plaintext messages will be stored in the server's database.
+3. **Ephemeral & Local Storage Caching (Storage Model):**
+   - Local chat history caching using the browser's **IndexedDB**.
+   - Users can clear or back up chat history at any time.
+4. **Habit Sharing Snapshot & Integration:**
+   - Easily send today's completion card (Habit Progress Bubble) as a message with a single click from within the chat.
+   - Automatic celebration card for a friend's streak milestone (`"🎉 Shashwoto just hit a 14-day streak on Read Book!"`).
 
 ---
 
 ## 🏆 Phase Y: Friends Leaderboard (Weekly Ranking & Consistency League)
 
-### উদ্দেশ্য
-গেমিফিকেশন এবং হেলদি ফ্রেন্ডলি কম্পিটিশনের মাধ্যমে বন্ধুদের মধ্যে দৈনিক ধারাবাহিকতা বজায় রাখার অনুপ্রেরণা তৈরি করা।
+### Goal
+Create motivation among friends to maintain daily consistency through gamification and healthy friendly competition.
 
-### কনসেপ্ট ও র্যাংকিং মেকানিক্স (Ranking Mechanics):
-1. **কনসিস্টেন্সি স্কোর ফর্মুলা (Consistency Index Score):**
-   - শুধুমাত্র মোট সংখ্যা নয়, বরং ধারাবাহিকতার ওপর ভিত্তি করে স্কোরিং:
+### Concept & Ranking Mechanics:
+1. **Consistency Score Formula (Consistency Index Score):**
+   - Scoring based not just on total numbers, but on consistency:
      $$\text{Score} = (\text{Weekly Completion \%} \times 10) + (\text{Active Streak} \times 5) + (\text{On-Time Bonus})$$
-2. **ফ্রেন্ডস-অনলি কোহোর্ট (Privacy-First Cohort):**
-   - গ্লোবাল পাবলিক লিডারবোর্ডের বদলে কঠোর প্রাইভেসি মেনে শুধুমাত্র মিউচুয়াল ফ্রেন্ডদের মধ্যে সাপ্তাহিক র্যাংকিং বোর্ড।
-   - অপ্ট-আউট প্রাইভেসি সেটিংস: ব্যবহারকারী চাইলে এক ক্লিকে ফ্রেন্ডস লিডারবোর্ড থেকে নিজের প্রোফাইল হাইড (Stealth Mode) রাখতে পারবেন।
-3. **সাপ্তাহিক রিসেট ও পডিয়াম ট্রফি (Weekly Podium & Seasons):**
-   - প্রতি সোমবার রাত ১২:০০ টায় লিডারবোর্ড রিসেট হয়ে নতুন সপ্তাহ শুরু হবে।
-   - শীর্ষ ৩ জন বন্ধু পাবে গোল্ড 🥇, সিলভার 🥈 এবং ব্রোঞ্জ 🥉 ব্যাজ, যা তাদের প্রোফাইল ও ফ্রেন্ড কার্ডে সারা সপ্তাহ প্রদর্শিত থাকবে।
-4. **ফ্রেন্ড কম্প্যারিজন ভিউ (Head-to-Head Habit Stats):**
-   - দুই বন্ধুর মধ্যকার হেবিট সম্পন্নতার গ্রাফিকাল তুলনা যাতে একে অপরকে পুশ করতে পারে।
+2. **Friends-Only Cohort (Privacy-First Cohort):**
+   - Instead of a global public leaderboard, a weekly ranking board strictly among mutual friends, respecting privacy.
+   - Opt-out privacy settings: users can hide their profile from the friends leaderboard (Stealth Mode) with a single click.
+3. **Weekly Reset & Podium Trophy (Weekly Podium & Seasons):**
+   - Leaderboard resets every Monday at 12:00 AM to start a new week.
+   - The top 3 friends receive Gold 🥇, Silver 🥈, and Bronze 🥉 badges, displayed on their profile and friend card throughout the week.
+4. **Friend Comparison View (Head-to-Head Habit Stats):**
+   - A graphical comparison of habit completion between two friends so they can push each other.
 
 ---
 
-## 📝 সারাংশ টেবিল (Quick Summary Table)
+## 📝 Quick Summary Table
 
-| ফিচার | ক্যাটাগরি | প্রজেক্টে বর্তমান অবস্থা | টার্গেট রিলিজ |
+| Feature | Category | Current Status in Project | Target Release |
 | :--- | :--- | :--- | :--- |
-| **Google Auth & Profiles** | Core Identity | ✅ সম্পূর্ণ বাস্তবায়িত | v1.0 |
-| **Streak Engine & Daily/Weekly** | Core Function | ✅ সম্পূর্ণ বাস্তবায়িত | v1.0 |
-| **PWA & Offline Sync** | Storage & Portability | ✅ সম্পূর্ণ বাস্তবায়িত | v1.0 |
-| **Friends System (Search & Nudge)** | Social & Privacy | ✅ বাস্তবায়নাধীন | v1.5 |
+| **Google Auth & Profiles** | Core Identity | ✅ Fully Implemented | v1.0 |
+| **Streak Engine & Daily/Weekly** | Core Function | ✅ Fully Implemented | v1.0 |
+| **PWA & Offline Sync** | Storage & Portability | ✅ Fully Implemented | v1.0 |
+| **Friends System (Search & Nudge)** | Social & Privacy | ✅ In Progress | v1.5 |
 | **Direct Messaging & Chat (Phase X)** | Real-Time Social | 📋 Architecture Documented | v2.0 |
 | **Friends Leaderboard (Phase Y)** | Gamification League | 📋 Concept Documented | v2.0 |
 | **AI Habit Coach** | Intelligence | 🚀 Upcoming (In Development) | v2.0 |
@@ -221,4 +221,3 @@
 ---
 
 *HabbitTracker — Building consistent routines, one day at a time.*
-
