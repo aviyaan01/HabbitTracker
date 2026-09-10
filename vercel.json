@@ -1,0 +1,47 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "habit-tracker-full/server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "habit-tracker-full/index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "habit-tracker-full/admin.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "habit-tracker-full/login.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "habit-tracker-full/manifest.json",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "habit-tracker-full/sw.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "habit-tracker-full/icon-192.png",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "habit-tracker-full/icon-512.png",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/habit-tracker-full/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/habit-tracker-full/$1"
+    }
+  ]
+}

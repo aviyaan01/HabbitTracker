@@ -1743,8 +1743,12 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`HabbitTracker Server running at http://0.0.0.0:${PORT}`);
-  console.log(`Security: x-powered-by disabled, environment secrets active, error masking enabled.`);
-});
+// Export app for Vercel Serverless Function & testing
+module.exports = app;
+
+if (require.main === module) {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`HabbitTracker Server running at http://0.0.0.0:${PORT}`);
+    console.log(`Security: x-powered-by disabled, environment secrets active, error masking enabled.`);
+  });
+}
