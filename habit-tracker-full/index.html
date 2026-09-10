@@ -134,6 +134,91 @@
       --bg-grad: radial-gradient(ellipse at top, #2e2927 0%, #171210 100%) fixed;
     }
 
+    /* ===== THEME DEFINITIONS (UI/UX BRIEF SPECIFICATION §2.2) ===== */
+    [data-theme="sakura"] {
+      --surface: #1a0a1a;
+      --paper: #1a0a1a;
+      --surface-container-lowest: #120712;
+      --surface-container-low: #220d22;
+      --surface-container: #2d1535;
+      --surface-container-high: #3d1b47;
+      --card: rgba(45, 21, 53, 0.82);
+      --card-active: rgba(61, 27, 71, 0.90);
+      --ink: #fce7f3;
+      --muted: #f472b6;
+      --subtle: #f0abfc;
+      --accent: #f472b6;
+      --ember: #f472b6;
+      --violet: #e879f9;
+      --tide: #e879f9;
+      --gold: #fbbf24;
+      --marigold: #fbbf24;
+      --bg-grad: radial-gradient(ellipse at top, #3d1b47 0%, #1a0a1a 100%) fixed;
+    }
+
+    [data-theme="ocean"] {
+      --surface: #030d1a;
+      --paper: #030d1a;
+      --surface-container-lowest: #020812;
+      --surface-container-low: #08182b;
+      --surface-container: #0c2340;
+      --surface-container-high: #123057;
+      --card: rgba(12, 35, 64, 0.82);
+      --card-active: rgba(18, 48, 87, 0.90);
+      --ink: #e0f2fe;
+      --muted: #38bdf8;
+      --subtle: #7dd3fc;
+      --accent: #38bdf8;
+      --ember: #38bdf8;
+      --violet: #818cf8;
+      --tide: #818cf8;
+      --gold: #f59e0b;
+      --marigold: #f59e0b;
+      --bg-grad: radial-gradient(ellipse at top, #0c2340 0%, #030d1a 100%) fixed;
+    }
+
+    [data-theme="sunset"] {
+      --surface: #1c0a00;
+      --paper: #1c0a00;
+      --surface-container-lowest: #120600;
+      --surface-container-low: #280e00;
+      --surface-container: #3d1a05;
+      --surface-container-high: #542407;
+      --card: rgba(61, 26, 5, 0.82);
+      --card-active: rgba(84, 36, 7, 0.90);
+      --ink: #ffedd5;
+      --muted: #fb923c;
+      --subtle: #fdba74;
+      --accent: #fb923c;
+      --ember: #fb923c;
+      --violet: #f43f5e;
+      --tide: #f43f5e;
+      --gold: #f59e0b;
+      --marigold: #f59e0b;
+      --bg-grad: radial-gradient(ellipse at top, #3d1a05 0%, #1c0a00 100%) fixed;
+    }
+
+    [data-theme="matrix"] {
+      --surface: #000d00;
+      --paper: #000d00;
+      --surface-container-lowest: #000800;
+      --surface-container-low: #001800;
+      --surface-container: #002500;
+      --surface-container-high: #003800;
+      --card: rgba(0, 37, 0, 0.82);
+      --card-active: rgba(0, 56, 0, 0.90);
+      --ink: #dcfce7;
+      --muted: #4ade80;
+      --subtle: #86efac;
+      --accent: #22c55e;
+      --ember: #22c55e;
+      --violet: #16a34a;
+      --tide: #16a34a;
+      --gold: #eab308;
+      --marigold: #eab308;
+      --bg-grad: radial-gradient(ellipse at top, #002500 0%, #000d00 100%) fixed;
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -7011,19 +7096,34 @@
       </div>
     </div>`;
 
-          // Theme showcase
+          // Theme showcase (UI/UX Brief §2.2 Specification)
+          const themes = [
+            { id: 'default', name: 'Ember & Tide', icon: '🔥', bg: '#171210', accent: '#ff5a36', desc: 'Roasted Charcoal, Ember & Tide Teal' },
+            { id: 'sakura', name: 'Sakura 🌸', icon: '🌸', bg: '#1a0a1a', accent: '#f472b6', desc: 'Nocturnal Pink & Magenta Violet' },
+            { id: 'ocean', name: 'Ocean 🌊', icon: '🌊', bg: '#030d1a', accent: '#38bdf8', desc: 'Abyss Navy & Celestial Blue' },
+            { id: 'sunset', name: 'Sunset 🌅', icon: '🌅', bg: '#1c0a00', accent: '#fb923c', desc: 'Warm Amber & Crimson Horizon' },
+            { id: 'matrix', name: 'Matrix 💻', icon: '💻', bg: '#000d00', accent: '#22c55e', desc: 'Terminal Cyber & Emerald Glow' }
+          ];
+
           const themeGrid = `
     <div class="card section">
-      <h2 class="stitle">Visual Theme <span style="font-size:10px;color:var(--ember);font-weight:700;">● Active</span></h2>
-      <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--radius-2xl);padding:18px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;">
-        <div style="display:flex;align-items:center;gap:14px;">
-          <div style="width:44px;height:44px;border-radius:var(--radius-xl);background:#120E0C;border:2px solid var(--ember);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:var(--glow-ember);">🔥</div>
-          <div>
-            <div style="font-size:15px;font-weight:800;color:var(--ink);">Ember & Tide (#120E0C)</div>
-            <div style="font-size:12px;color:var(--muted);margin-top:2px;">Roasted Charcoal surfaces, Ember streak flame, Tide teal intelligence & Marigold rewards.</div>
-          </div>
-        </div>
-        <div style="font-family:var(--mono);font-size:11px;color:var(--ember);background:rgba(255, 90, 54, 0.12);padding:4px 12px;border-radius:var(--radius-full);border:1px solid rgba(255, 90, 54, 0.25);">Official Design System</div>
+      <h2 class="stitle">Visual Theme Selector <span style="font-size:10px;color:var(--tide);font-weight:700;">● Active: ${themes.find(t=>t.id===currentTheme)?.name || 'Ember & Tide'}</span></h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;margin-top:12px;">
+        ${themes.map(t => {
+          const isActive = currentTheme === t.id;
+          return `
+            <div onclick="setTheme('${t.id}')" style="background:${t.bg};border:2px solid ${isActive ? t.accent : 'rgba(255,255,255,0.08)'};border-radius:var(--radius-2xl);padding:14px;cursor:pointer;transition:all .2s ease;box-shadow:${isActive ? `0 0 16px ${t.accent}44` : 'none'};display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;">
+                <span style="font-size:22px;">${t.icon}</span>
+                ${isActive ? `<span style="font-size:10px;font-weight:800;color:${t.accent};background:${t.accent}22;padding:2px 8px;border-radius:var(--radius-full);border:1px solid ${t.accent}44;">ACTIVE</span>` : `<span style="font-size:10px;color:var(--muted);">Apply</span>`}
+              </div>
+              <div>
+                <div style="font-size:14px;font-weight:800;color:#fff;">${t.name}</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-top:2px;">${t.desc}</div>
+              </div>
+            </div>
+          `;
+        }).join('')}
       </div>
     </div>`;
 

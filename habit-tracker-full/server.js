@@ -794,6 +794,17 @@ app.post('/api/sync', requireAuth, (req, res) => {
     habitNames = data.habits.map(h => typeof h === 'string' ? h.trim() : (h.name || '').trim()).filter(Boolean);
   }
 
+  // Server-side Freemium Plan Gating (PRD F1/F8 & TRD §4.2)
+  const currentPlan = user.plan || 'free';
+  if (currentPlan === 'free' && habitNames.length > 5) {
+    return res.status(403).json({
+      error: 'Free plan limit exceeded (max 5 habits). Please upgrade to Pro for unlimited habits!',
+      code: 'PLAN_LIMIT_EXCEEDED',
+      habitCount: habitNames.length,
+      limit: 5
+    });
+  }
+
   user.basic_habit_names = habitNames;
 
   if (data.activity && typeof data.activity === 'object') {
@@ -1569,10 +1580,13 @@ app.post('/api/upgrade', requireAuth, (req, res) => {
   const db = readDB();
   const username = req.user;
 
+  if (db.users && db.users[username]) {
+    db.users[username].plan = plan;
+  }
+  if (!db.data) db.data = {};
   if (!db.data[username]) {
     db.data[username] = {};
   }
-
   db.data[username].plan = plan;
   writeDB(db);
 
