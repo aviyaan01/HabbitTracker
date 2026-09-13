@@ -1,0 +1,8 @@
+# Netlify configuration when habit-tracker-full is deployed directly
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

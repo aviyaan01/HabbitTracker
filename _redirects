@@ -1,0 +1,3 @@
+/                      /habit-tracker-full/index.html   301!
+/habit-tracker-full/*  /habit-tracker-full/:splat        200
+/*                     /habit-tracker-full/index.html   200

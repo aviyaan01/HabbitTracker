@@ -1,0 +1,9 @@
+# Netlify configuration for root repository
+[build]
+  base = "habit-tracker-full"
+  publish = "."
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
