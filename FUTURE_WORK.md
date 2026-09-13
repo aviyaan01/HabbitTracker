@@ -69,20 +69,42 @@ Establish a transparent and reliable monetization model between the Free and Pro
 
 ---
 
-## 🤖 2. Gemini AI Habit Coach
+## 🤖 2. Gemini AI Habit Coach (Upcoming Flagship Feature — Phase 2)
+
+### Status & Target Release
+- **Status:** 🚀 **Active Phase 2 Roadmap / Upcoming Feature (আসন্ন ফিচার)**
+- **Target Release:** V2.0 Major Engine Update
+- **Beta Access:** In-app VIP Early Access Waitlist actively collecting user registrations
 
 ### Goal
-Move beyond a simple checklist to guide users like a personal digital life coach.
+Transform HabbitTracker from a passive checkbox tracker into an intelligent, proactive behavioral psychologist and daily routine architect powered by Google DeepMind's **Gemini 2.5 Flash** model.
 
-### Key Features:
-1. **Personal Routine Analysis:**
-   - Analyze user's daily completion patterns, peak performance hours, and reasons for missed habits.
-   - Recommend suitable habits based on the user's lifestyle (e.g., sleep routine, hydration, deep work).
-2. **Interactive Chat Coaching (Multi-turn Conversation):**
-   - Direct in-app conversation with the AI coach (e.g., *"I can't focus on studying today, what should I do?"*).
-   - Realistic and motivating responses via Gemini Interactions API (`@google/genai`) and prompt engineering.
-3. **Smart Reminder Window Adjustment:**
-   - If a user regularly misses a habit's scheduled time, the AI will automatically suggest a more convenient new time.
+### Key Capabilities & Architecture:
+1. **Context-Aware Routine Friction Diagnostics:**
+   - Automatically ingest user habit completion trends, timestamp metadata, peak performance windows, and streak drop patterns.
+   - Detect friction triggers (e.g. *"Evening habit scheduled at 10:30 PM has an 82% failure rate due to decision fatigue"*).
+   - Proactively recommend friction reduction adjustments (James Clear's *Atomic Habits* & BJ Fogg's *Tiny Habits* methodologies).
+
+2. **Automated Habit Stacking Architect:**
+   - Intelligently pair challenging new routines with established everyday anchor habits (e.g. *"After I brew morning coffee [Anchor], I will review top 3 priorities [New Habit]"*).
+   - Calculate habit synergy scores to maximize routine stickiness.
+
+3. **Conversational & Natural Voice Check-ins:**
+   - Multi-turn conversational habit logging using natural language.
+   - Voice and text prompt parsing (e.g. *"Ran 3 kilometers in 18 minutes and drank 2 liters of water"* automatically updates both habit records with appropriate checkmarks).
+   - Powered by Gemini Interactions API (`@google/genai`) with low-latency streaming responses.
+
+4. **Never Miss Twice Streak Recovery Protocol:**
+   - When a streak breaks, behavioral research shows users often succumb to the "what-the-hell effect" and abandon the habit entirely.
+   - The AI Coach initiates an automated cognitive reset protocol within 12 hours: providing motivational reframing, micro-step scaling (reducing habit to 2-minute version), and adjusting reminders to guarantee day-2 recovery.
+
+5. **Privacy & Offline Resilient Fallback:**
+   - **Privacy-First Design:** Habit data is sanitized before API inference; no personal identifying information (PII) is transmitted.
+   - **Offline Heuristics Engine:** If the device is offline or API access is unconfigured, the app seamlessly falls back to a deterministic rule-based behavioral coach engine (`generateBehavioralCoachResponse`) without service interruption.
+
+6. **VIP Early Access Waitlist:**
+   - Users can opt-in directly via the 🤖 Coach tab (`Join VIP Waitlist` button).
+   - User enrollment is persisted in `localStorage` and synchronized with user account profile for priority roll-out.
 
 ---
 
@@ -200,17 +222,52 @@ Create motivation among friends to maintain daily consistency through gamificati
 
 ---
 
+## 📱 8. Universal Mobile Responsive Auto-Fit Architecture
+
+### Status & Implementation
+- **Status:** ✅ **Fully Implemented & Active (v1.1)**
+- **Target Coverage:** 100% of modern iOS & Android smartphones (320px ultra-compact to 768px+ phablets & foldables)
+
+### Goal
+Ensure HabbitTracker delivers a seamless, pixel-perfect, native-app feel on any phone screen size without awkward text clipping, cramped buttons ("hiji biji"), or uncontrolled horizontal overflows.
+
+### Core Architectural Features:
+1. **Touch-Scrollable Pill Ribbon Navigation (`.tabs`):**
+   - Replaces rigid single-line compression with a fluid horizontal scroll ribbon.
+   - Smooth inertia touch scrolling (`-webkit-overflow-scrolling: touch`), scroll snap (`scroll-snap-type: x proximity`), and hidden scrollbars.
+   - Preserves readable typography and minimum 40px touch hit targets on every navigation tab.
+
+2. **Adaptive Habit Rows & Actions (`.habit-row`):**
+   - Flexible auto-wrapping ensures habit titles, streak badges, alarm time pickers, and action buttons arrange cleanly without colliding.
+   - Enforces minimum 32px–40px tap zones for checkboxes and action icons.
+
+3. **Isolated Table Matrix Scrolling (`.table-responsive`):**
+   - Dedicated scroll container wraps the 9-column weekly habit matrix.
+   - Prevents wide multi-column tables from expanding the parent card or triggering accidental horizontal viewport panning.
+
+4. **Dynamic Monthly Bar Spacing:**
+   - Bar chart flex gaps dynamically scale (4px on desktop $\rightarrow$ 2px on mobile $\rightarrow$ 1.5px on compact phones) ensuring all 28–31 monthly bars render cleanly.
+
+5. **Safe-Area Inset Handling:**
+   - Full support for device notches, punch-holes, and gesture navigation bars via CSS `env(safe-area-inset-top)` and `env(safe-area-inset-bottom)`.
+
+6. **Input Zoom Prevention:**
+   - Mobile form controls enforce `font-size: 16px` to suppress unwanted automatic zoom behavior in iOS Safari.
+
+---
+
 ## 📝 Quick Summary Table
 
 | Feature | Category | Current Status in Project | Target Release |
 | :--- | :--- | :--- | :--- |
+| **Universal Mobile Auto-Fit UI** | Responsive Design | ✅ Fully Implemented | v1.1 |
 | **Google Auth & Profiles** | Core Identity | ✅ Fully Implemented | v1.0 |
 | **Streak Engine & Daily/Weekly** | Core Function | ✅ Fully Implemented | v1.0 |
 | **PWA & Offline Sync** | Storage & Portability | ✅ Fully Implemented | v1.0 |
 | **Friends System (Search & Nudge)** | Social & Privacy | ✅ In Progress | v1.5 |
 | **Direct Messaging & Chat (Phase X)** | Real-Time Social | 📋 Architecture Documented | v2.0 |
 | **Friends Leaderboard (Phase Y)** | Gamification League | 📋 Concept Documented | v2.0 |
-| **AI Habit Coach** | Intelligence | 🚀 Upcoming (In Development) | v2.0 |
+| **Gemini AI Habit Coach** | Intelligence | 🚀 Flagship Upcoming Feature (VIP Waitlist Live) | v2.0 |
 | **52-Week Activity Heatmap** | Analytics | 🚀 Upcoming (In Development) | v2.0 |
 | **Curated Challenge Packs** | Gamification | 🚀 Upcoming (Roadmap) | v2.0 |
 | **Payment Gateway (bKash/Stripe)** | Monetization | 📋 Future Work | v2.5 |

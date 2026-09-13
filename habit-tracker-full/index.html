@@ -1938,15 +1938,18 @@
     }
 
     .ai-suggestion-card {
-      background: rgba(31, 194, 176, 0.08);
-      border: 1px solid rgba(31, 194, 176, 0.22);
+      background: rgba(31, 194, 176, 0.06);
+      border: 1px solid rgba(31, 194, 176, 0.2);
       border-radius: var(--radius-2xl);
-      padding: 18px;
-      margin-bottom: 14px;
-      transition: all .2s ease;
-      cursor: pointer;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      transition: all .25s ease;
       position: relative;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
 
     .ai-suggestion-card::before {
@@ -1954,15 +1957,44 @@
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
-      height: 2px;
+      bottom: 0;
+      width: 3px;
       background: var(--tide);
+      opacity: 0.85;
+      transition: all .2s ease;
     }
 
     .ai-suggestion-card:hover {
-      background: rgba(31, 194, 176, 0.12);
-      transform: translateY(-1px);
-      box-shadow: var(--glow-tide);
+      background: rgba(31, 194, 176, 0.1);
+      border-color: rgba(31, 194, 176, 0.35);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px -6px rgba(31, 194, 176, 0.2);
+    }
+
+    .ai-suggestion-card:hover::before {
+      width: 4px;
+      opacity: 1;
+    }
+
+    .ai-suggestion-card.is-added {
+      border-color: rgba(16, 185, 129, 0.28);
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .ai-suggestion-card.is-added::before {
+      background: #10b981;
+    }
+
+    .ai-suggestion-body {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .ai-suggestion-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
     }
 
     .ai-suggestion-category {
@@ -1971,45 +2003,96 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--tide);
-      margin-bottom: 6px;
+      font-weight: 800;
+      background: rgba(31, 194, 176, 0.12);
+      padding: 2px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .ai-suggestion-added-tag {
+      font-family: var(--sans);
+      font-size: 10px;
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 2px 8px;
+      border-radius: 6px;
       font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .ai-suggestion-title {
       font-size: 15px;
-      font-weight: 800;
+      font-weight: 700;
       color: var(--ink);
       margin-bottom: 5px;
+      line-height: 1.3;
     }
 
     .ai-suggestion-desc {
       font-size: 12.5px;
       color: var(--muted);
-      line-height: 1.55;
+      line-height: 1.5;
+      margin: 0;
+      word-break: break-word;
+    }
+
+    .ai-suggestion-action {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
     }
 
     .ai-add-btn {
-      position: absolute;
-      right: 16px;
-      top: 50%;
-      transform: translateY(-50%);
+      position: static;
+      transform: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
       background: rgba(31, 194, 176, 0.18);
       border: 1px solid rgba(31, 194, 176, 0.35);
       color: var(--tide);
       border-radius: var(--radius-xl);
-      padding: 6px 12px;
-      font-size: 11.5px;
+      padding: 8px 16px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
       font-family: var(--sans);
       white-space: nowrap;
-      transition: all .15s ease;
+      transition: all .2s cubic-bezier(0.16, 1, 0.3, 1);
+      min-height: 38px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     }
 
     .ai-add-btn:hover {
       background: var(--tide);
       color: #021e1a;
-      box-shadow: var(--glow-tide);
+      border-color: var(--tide);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(31, 194, 176, 0.35);
+    }
+
+    .ai-add-btn:active {
+      transform: scale(0.97);
+    }
+
+    .ai-add-btn.added {
+      background: rgba(16, 185, 129, 0.14);
+      border-color: rgba(16, 185, 129, 0.35);
+      color: #10b981;
+      cursor: default;
+    }
+
+    .ai-add-btn.added:hover {
+      background: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+      transform: none;
+      box-shadow: none;
     }
 
     .ai-insight-card {
@@ -3473,143 +3556,544 @@
       box-shadow: 0 6px 16px rgba(255, 90, 54, 0.45);
     }
 
-    /* === RESPONSIVE === */
-    @media(max-width:600px) {
+    /* === TABLE RESPONSIVE WRAPPER === */
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 10px 0;
+      border-radius: var(--radius-xl);
+      scrollbar-width: thin;
+    }
+
+    .upcoming-tab-badge {
+      font-size: 8.5px;
+      font-weight: 800;
+      color: var(--tide);
+      background: rgba(73, 220, 201, 0.16);
+      padding: 1px 6px;
+      border-radius: 8px;
+      margin-left: 4px;
+      letter-spacing: 0.04em;
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+    .upcoming-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--tide);
+      box-shadow: 0 0 6px var(--tide);
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    /* === UNIVERSAL MOBILE RESPONSIVE ADAPTATION === */
+    @media(max-width:768px) {
       .app {
-        padding: max(64px, calc(env(safe-area-inset-top) + 24px)) 12px 100px;
+        padding: max(20px, calc(env(safe-area-inset-top) + 16px)) 14px max(90px, calc(env(safe-area-inset-bottom) + 70px));
+        max-width: 100%;
+      }
+    }
+
+    @media(max-width:600px) {
+      /* Smooth Touch Ribbon for Tabs */
+      .tabs {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        scroll-snap-type: x proximity;
+        gap: 6px;
+        padding: 6px;
+        border-radius: var(--radius-2xl);
+        margin-bottom: 18px;
+      }
+      .tabs::-webkit-scrollbar {
+        display: none;
+      }
+      .tabs .tab {
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+        white-space: nowrap;
+        font-size: 12.5px;
+        font-weight: 700;
+        padding: 8px 14px;
+        border-radius: var(--radius-xl);
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
       }
 
+      /* Topbar & User Pill */
+      .topbar {
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+      .brand {
+        gap: 8px;
+      }
       .brand h1 {
         font-size: 16px;
       }
-
-      .tabs .tab {
-        font-size: 11px;
-        padding: 8px 3px;
+      .topbar-user-pill {
+        max-width: 140px;
+      }
+      .topbar-username {
+        max-width: 75px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .sync-badge {
+        padding: 3px 6px;
+        font-size: 9px;
       }
 
+      /* Cards & Spacing */
       .card {
         padding: 16px 14px;
-        border-radius: 14px;
+        border-radius: 16px;
+        margin-bottom: 16px;
       }
 
+      /* Habit Rows & Touch Targets */
+      .habit-row {
+        gap: 8px;
+        padding: 10px 4px;
+        flex-wrap: wrap;
+      }
       .habit-name {
         font-size: 13.5px;
+        line-height: 1.35;
+        min-width: 140px;
       }
-
       .reminder-badge,
       .missed-badge,
       .streak-badge,
       .days-badge {
         font-size: 9px;
+        padding: 2px 6px;
       }
-
-      .stats-grid {
-        gap: 6px;
+      .chk {
+        width: 28px;
+        height: 28px;
       }
-
-      .stat-card {
-        padding: 10px 6px;
-      }
-
-      .stat-card-value {
-        font-size: 19px;
-      }
-
-      .week-scroll {
-        gap: 8px;
-      }
-
-      .day-card {
-        min-width: 140px;
-        padding: 10px;
-      }
-
-      .plan-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .data-actions {
-        flex-direction: column;
-      }
-
-      .nav-title b {
-        font-size: 13px;
-      }
-
-      h2.stitle {
-        font-size: 11px;
-      }
-
-      table.habit-grid td:first-child,
-      table.habit-grid th:first-child {
-        min-width: 90px;
-      }
-
-      .add-btn {
-        padding: 0 12px;
-        font-size: 13px;
-      }
-
-      .challenge-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .insight-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .theme-grid {
-        grid-template-columns: repeat(5, 1fr);
-      }
-
-      .pricing-cards {
-        grid-template-columns: 1fr;
-      }
-
-      .share-actions {
-        flex-direction: column;
-      }
-
-      .dash-stats-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .cloud-btn-group {
-        grid-template-columns: 1fr;
-      }
-
-      .auth-perks-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .profile-hero {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-
-    @media(max-width:380px) {
-      .brand h1 {
-        font-size: 14px;
-      }
-
-      .brand-mark {
+      .icon-btn {
         width: 32px;
         height: 32px;
       }
 
+      /* Stats & Cards */
       .stats-grid {
-        grid-template-columns: 1fr 1fr;
+        gap: 6px;
       }
-
-      .challenge-grid {
+      .stat-card {
+        padding: 10px 6px;
+      }
+      .stat-card-value {
+        font-size: 19px;
+      }
+      .week-scroll {
+        gap: 8px;
+      }
+      .day-card {
+        min-width: 135px;
+        padding: 10px;
+      }
+      .plan-grid {
         grid-template-columns: 1fr;
       }
+      .data-actions {
+        flex-direction: column;
+      }
+      .nav-title b {
+        font-size: 13px;
+      }
+      h2.stitle {
+        font-size: 11.5px;
+      }
 
+      /* Add Habit Row */
+      .add-row {
+        gap: 8px;
+      }
+      .add-row input {
+        font-size: 16px; /* Prevents auto-zoom on iOS */
+        padding: 10px 12px;
+      }
+      .add-btn {
+        padding: 0 14px;
+        font-size: 13px;
+        min-height: 42px;
+      }
+
+      /* Grids */
+      .challenge-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .insight-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .theme-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .pricing-cards {
+        grid-template-columns: 1fr;
+      }
+      .share-actions {
+        flex-direction: column;
+      }
+      .dash-stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .cloud-btn-group {
+        grid-template-columns: 1fr;
+      }
+      .auth-perks-grid {
+        grid-template-columns: 1fr;
+      }
+      .profile-hero {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      /* Modals */
+      .modal-overlay {
+        padding: 10px;
+        align-items: flex-end;
+      }
+      .modal-card {
+        padding: 18px 14px;
+        border-radius: 22px 22px 14px 14px;
+        max-height: 92vh;
+        overflow-y: auto;
+        width: 100%;
+      }
+
+      /* AI Suggestions */
+      .ai-suggestion-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 14px 16px;
+      }
+      .ai-suggestion-action {
+        width: 100%;
+      }
+      .ai-add-btn {
+        width: 100%;
+        min-height: 42px;
+        font-size: 13px;
+        justify-content: center;
+      }
+    }
+
+    @media(max-width:480px) {
+      .brand h1 {
+        font-size: 15px;
+      }
+      .brand-mark {
+        width: 32px;
+        height: 32px;
+      }
+      .brand-mark svg {
+        width: 17px;
+        height: 17px;
+      }
       .theme-grid {
         grid-template-columns: repeat(3, 1fr);
       }
+      .bars {
+        gap: 2px;
+        height: 80px;
+      }
+      .bar {
+        border-radius: 2px 2px 0 0;
+      }
+      .bar-label {
+        font-size: 8.5px;
+      }
+      .dash-stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .ai-upcoming-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    @media(max-width:380px) {
+      .app {
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .challenge-grid {
+        grid-template-columns: 1fr;
+      }
+      .insight-grid {
+        grid-template-columns: 1fr;
+      }
+      .theme-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .topbar-username {
+        display: none;
+      }
+      .topbar-user-pill {
+        padding: 4px;
+      }
+      .bars {
+        gap: 1.5px;
+      }
+    }
+
+    /* ===== UPCOMING GEMINI AI COACH SHOWCASE STYLES ===== */
+    .ai-upcoming-showcase {
+      background: rgba(25, 20, 17, 0.90);
+      border: 1px solid rgba(73, 220, 201, 0.28);
+      border-radius: var(--radius-3xl);
+      padding: 22px;
+      margin-bottom: 22px;
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.55);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    .ai-upcoming-showcase::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -20%;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(73, 220, 201, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .ai-upcoming-badge-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .ai-upcoming-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(73, 220, 201, 0.14);
+      color: var(--tide);
+      border: 1px solid rgba(73, 220, 201, 0.35);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 10.5px;
+      font-weight: 800;
+      font-family: var(--mono);
+      letter-spacing: 0.05em;
+    }
+
+    .ai-upcoming-version {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--line);
+    }
+
+    .ai-upcoming-hero {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .ai-upcoming-title {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--ink);
+      margin: 0 0 4px;
+      letter-spacing: -0.02em;
+    }
+
+    .ai-upcoming-subtitle {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .ai-upcoming-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .ai-upcoming-feature-card {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-2xl);
+      padding: 14px;
+      transition: all .2s ease;
+    }
+
+    .ai-upcoming-feature-card:hover {
+      border-color: rgba(73, 220, 201, 0.3);
+      background: rgba(73, 220, 201, 0.05);
+    }
+
+    .ai-uf-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .ai-uf-icon {
+      font-size: 22px;
+    }
+
+    .ai-uf-tag {
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--tide);
+      background: rgba(73, 220, 201, 0.12);
+      border: 1px solid rgba(73, 220, 201, 0.25);
+      padding: 2px 7px;
+      border-radius: 8px;
+      font-family: var(--mono);
+    }
+
+    .ai-uf-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .ai-uf-desc {
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .ai-sneak-peek {
+      background: rgba(18, 14, 12, 0.65);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-2xl);
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .ai-sneak-peek-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 10.5px;
+      font-weight: 800;
+      color: var(--subtle);
+      font-family: var(--mono);
+      margin-bottom: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    .ai-preview-msg {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .ai-preview-msg.user {
+      justify-content: flex-end;
+    }
+
+    .ai-preview-msg.user .ai-preview-bubble {
+      background: linear-gradient(135deg, var(--ember), #e63e1c);
+      color: #fff;
+      border-radius: 16px 16px 4px 16px;
+      padding: 10px 14px;
+      font-size: 12.5px;
+      max-width: 85%;
+      line-height: 1.4;
+    }
+
+    .ai-preview-msg.coach .ai-preview-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--ember), var(--tide));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .ai-preview-msg.coach .ai-preview-bubble {
+      background: rgba(35, 29, 25, 0.85);
+      border: 1px solid rgba(73, 220, 201, 0.25);
+      border-radius: 16px 16px 16px 4px;
+      padding: 12px 14px;
+      font-size: 12px;
+      color: var(--ink);
+      line-height: 1.5;
+      max-width: 88%;
+    }
+
+    .ai-preview-msg.coach .ai-preview-bubble p {
+      margin: 0 0 6px;
+    }
+
+    .ai-waitlist-box {
+      background: rgba(73, 220, 201, 0.07);
+      border: 1px solid rgba(73, 220, 201, 0.25);
+      border-radius: var(--radius-2xl);
+      padding: 16px 18px;
+    }
+
+    .ai-waitlist-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ai-waitlist-btn {
+      background: var(--pro-gradient);
+      border: none;
+      color: #171210;
+      font-family: var(--sans);
+      font-weight: 800;
+      font-size: 13px;
+      padding: 10px 18px;
+      border-radius: var(--radius-xl);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: var(--glow-tide);
+      transition: all .2s ease;
+      white-space: nowrap;
+    }
+
+    .ai-waitlist-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(73, 220, 201, 0.45);
     }
 
     /* ===== V2.0 ENGINE: DIRECT MESSAGING MODAL & CHAT ===== */
@@ -6371,10 +6855,8 @@
     <div class="tab ${activeTab === 'weekly' ? 'active' : ''}" role="tab" aria-selected="${activeTab === 'weekly'}" id="tab-weekly" onclick="setTab('weekly')">Weekly</div>
     <div class="tab ${activeTab === 'monthly' ? 'active' : ''}" role="tab" aria-selected="${activeTab === 'monthly'}" id="tab-monthly" onclick="setTab('monthly')">Monthly</div>
     <div class="tab ${activeTab === 'history' ? 'active' : ''}" role="tab" aria-selected="${activeTab === 'history'}" id="tab-history" onclick="setTab('history')">History</div>
-    <div class="tab ${activeTab === 'coach' ? 'active' : ''}" role="tab" aria-selected="${activeTab === 'coach'}" id="tab-coach" onclick="setTab('coach')" title="Gemini AI Habit Coach">🤖</div>
-    <div class="tab ${activeTab === 'challenges' ? 'active' : ''}" role="tab" aria-selected="${activeTab === 'challenges'}" id="tab-challenges" onclick="setTab('challenges')" title="Challenges">🏆</div>
-    <div class="tab ${activeTab === 'pro' ? 'active' : ''}" role="tab" aria-selected="${activeTab === 'pro'}" id="tab-pro" onclick="setTab('pro')" title="Roadmap & Upcoming Features">🚀</div>
-    <div class="tab ${activeTab === 'account' ? 'active' : ''}" role="tab" aria-selected="${activeTab === 'account'}" id="tab-account" onclick="setTab('account')" title="Account Dashboard">${currentUser ? '👤 Profile' : '🔐 Login'}</div>
+    <div class="tab ${activeTab === 'challenges' ? 'active' : ''}" role="tab" aria-selected="${activeTab === 'challenges'}" id="tab-challenges" onclick="setTab('challenges')" title="Challenges">🏆 Challenges</div>
+    <div class="tab ${activeTab === 'account' ? 'active' : ''}" role="tab" aria-selected="${activeTab === 'account'}" id="tab-account" onclick="setTab('account')" title="Account & Profile">${currentUser ? '👤 Profile' : '🔐 Login'}</div>
   </div>`;
         }
 
@@ -6646,15 +7128,47 @@
           return paragraphs;
         }
 
+        function joinGeminiWaitlist() {
+          localStorage.setItem('habittracker_gemini_waitlist', 'true');
+          showToast('🎉 You have joined the Gemini AI Coach VIP Early Access list!', 4000);
+          if (typeof fireConfetti === 'function') fireConfetti();
+          render();
+        }
+
         function renderAICoach() {
           const suggSlice = AI_SUGGESTIONS.slice(aiSuggestionIndex, aiSuggestionIndex + 3);
-          const suggHtml = suggSlice.map(s => `
-      <div class="ai-suggestion-card">
-        <div class="ai-suggestion-category">${s.category}</div>
-        <div class="ai-suggestion-title">${s.title}</div>
-        <div class="ai-suggestion-desc" style="padding-right:80px;">${s.desc}</div>
-        <button class="ai-add-btn" onclick="addHabitFromAI('${esc(s.habit)}')">+ Add Habit</button>
-      </div>`).join('');
+          const suggHtml = suggSlice.map(s => {
+            const isAlreadyAdded = habits.some(h => 
+              h.name.toLowerCase() === s.habit.toLowerCase() || 
+              h.name.toLowerCase() === s.title.toLowerCase()
+            );
+            return `
+      <div class="ai-suggestion-card ${isAlreadyAdded ? 'is-added' : ''}">
+        <div class="ai-suggestion-body">
+          <div class="ai-suggestion-badge-row">
+            <span class="ai-suggestion-category">${s.category}</span>
+            ${isAlreadyAdded ? '<span class="ai-suggestion-added-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Added</span>' : ''}
+          </div>
+          <div class="ai-suggestion-title">${s.title}</div>
+          <div class="ai-suggestion-desc">${s.desc}</div>
+        </div>
+        <div class="ai-suggestion-action">
+          <button 
+            class="ai-add-btn ${isAlreadyAdded ? 'added' : ''}" 
+            onclick="${isAlreadyAdded ? `showToast('✅ &quot;${esc(s.title)}&quot; is already in your habits!', 2500)` : `addHabitFromAI('${esc(s.habit)}')`}"
+            aria-label="${isAlreadyAdded ? 'Already added' : 'Add ' + esc(s.title)}"
+          >
+            ${isAlreadyAdded ? `
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Added</span>
+            ` : `
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Add Habit</span>
+            `}
+          </button>
+        </div>
+      </div>`;
+          }).join('');
 
           const totalDone = getAllTimeDone();
           const bestStreak = getBestStreak();
@@ -6674,75 +7188,113 @@
         <div class="ai-insight-text">${i.text}</div>
       </div>`).join('');
 
+          const isWaitlisted = localStorage.getItem('habittracker_gemini_waitlist') === 'true';
+
           return `
-      <!-- Gemini AI Habit Coach Console -->
-      <div class="ai-chat-console">
-        <div class="ai-coach-banner">
-          <div class="ai-coach-identity">
-            <div class="ai-coach-avatar">🤖</div>
-            <div>
-              <div style="font-size:17px;font-weight:900;color:var(--ink);letter-spacing:-0.01em;">Gemini AI Habit Coach (Upcoming)</div>
-              <div style="font-size:12px;color:var(--muted);margin-top:2px;">Personalized routine coaching & behavioral psychology</div>
+      <!-- Flagship Upcoming Feature Showcase -->
+      <div class="ai-upcoming-showcase">
+        <div class="ai-upcoming-badge-row">
+          <span class="ai-upcoming-badge">✨ UPCOMING FEATURE • PHASE 2 ROADMAP</span>
+          <span class="ai-upcoming-version">Coming in V2.0</span>
+        </div>
+
+        <div class="ai-upcoming-hero">
+          <div class="ai-coach-avatar" style="width:54px;height:54px;font-size:28px;">🤖</div>
+          <div style="flex:1;">
+            <h2 class="ai-upcoming-title">Gemini 2.5 Flash AI Habit Coach</h2>
+            <p class="ai-upcoming-subtitle">An intelligent behavioral psychologist and daily routine architect built directly into your habit tracker.</p>
+          </div>
+        </div>
+
+        <!-- Planned Capabilities Grid -->
+        <div class="ai-upcoming-grid">
+          <div class="ai-upcoming-feature-card">
+            <div class="ai-uf-header">
+              <span class="ai-uf-icon">🧠</span>
+              <span class="ai-uf-tag">Context Aware</span>
+            </div>
+            <div class="ai-uf-title">Routine Friction Diagnostics</div>
+            <div class="ai-uf-desc">Learns your peak completion hours and pinpoints exact friction triggers behind missed habits.</div>
+          </div>
+
+          <div class="ai-upcoming-feature-card">
+            <div class="ai-uf-header">
+              <span class="ai-uf-icon">⚡</span>
+              <span class="ai-uf-tag">Atomic Habits</span>
+            </div>
+            <div class="ai-uf-title">Automated Habit Stacking</div>
+            <div class="ai-uf-desc">Intelligently pairs challenging new routines with established anchor habits for 3x higher stickiness.</div>
+          </div>
+
+          <div class="ai-upcoming-feature-card">
+            <div class="ai-uf-header">
+              <span class="ai-uf-icon">🎙️</span>
+              <span class="ai-uf-tag">Voice & Text</span>
+            </div>
+            <div class="ai-uf-title">Conversational Check-ins</div>
+            <div class="ai-uf-desc">Log habits using natural language: "Ran 3km and drank 2L water" automatically checks them off.</div>
+          </div>
+
+          <div class="ai-upcoming-feature-card">
+            <div class="ai-uf-header">
+              <span class="ai-uf-icon">🛡️</span>
+              <span class="ai-uf-tag">Psychology</span>
+            </div>
+            <div class="ai-uf-title">Never Miss Twice Protocol</div>
+            <div class="ai-uf-desc">Dynamic cognitive reset strategies prevent streak drops from spiraling into abandoned habits.</div>
+          </div>
+        </div>
+
+        <!-- Sneak Peek Interactive Demo Card -->
+        <div class="ai-sneak-peek">
+          <div class="ai-sneak-peek-header">
+            <span>💬 SNEAK PEEK: LIVE INTERACTION DEMO</span>
+            <span style="font-family:var(--mono);font-size:10px;color:var(--muted);">Simulated Model Preview</span>
+          </div>
+          <div class="ai-preview-msg user">
+            <div class="ai-preview-bubble">I keep skipping my evening reading habit at 10 PM. What should I change?</div>
+          </div>
+          <div class="ai-preview-msg coach">
+            <div class="ai-preview-avatar">🤖</div>
+            <div class="ai-preview-bubble">
+              <p>💡 <strong>Friction Reduction Strategy:</strong> At 10:00 PM decision fatigue is highest. Try the <em>2-Minute Anchor Shift</em>:</p>
+              <div style="margin:6px 0;display:flex;gap:6px;align-items:flex-start;"><span style="color:var(--tide);">•</span><span>Place your book open on your pillow when you make your bed in the morning.</span></div>
+              <div style="margin:6px 0;display:flex;gap:6px;align-items:flex-start;"><span style="color:var(--tide);">•</span><span>Anchor reading to immediately after dinner tea rather than right before sleep.</span></div>
             </div>
           </div>
-          <div class="ai-status-pill">
-            <span style="width:7px;height:7px;border-radius:50%;background:var(--tide);display:inline-block;box-shadow:0 0 8px var(--tide);"></span>
-            <span>Upcoming</span>
-          </div>
         </div>
 
-        <!-- Quick Question Chips -->
-        <div class="ai-chips-scroll">
-          <button class="ai-chip" onclick="handleQuickAICoachPrompt('How do I build an unbreakable morning routine?')">
-            <span>☀️ Morning Routine</span>
-          </button>
-          <button class="ai-chip" onclick="handleQuickAICoachPrompt('I missed a day on my streak. How do I recover mentally?')">
-            <span>🔥 Never Miss Twice</span>
-          </button>
-          <button class="ai-chip" onclick="handleQuickAICoachPrompt('Analyze my current habit consistency and suggest 1 improvement.')">
-            <span>📊 Analyze Consistency</span>
-          </button>
-          <button class="ai-chip" onclick="handleQuickAICoachPrompt('How can I apply the 2-Minute Rule to my habits?')">
-            <span>⏱️ 2-Minute Rule</span>
-          </button>
-          <button class="ai-chip" onclick="handleQuickAICoachPrompt('What is habit stacking and how can I pair my current habits?')">
-            <span>⚡ Habit Stacking</span>
-          </button>
-        </div>
-
-        <!-- Message Thread -->
-        <div class="ai-chat-thread" id="ai-chat-thread">
-          ${renderAICoachMessages()}
-          ${isAICoachThinking ? `
-            <div class="ai-msg coach">
-              <div class="ai-msg-bubble" style="display:inline-flex;align-items:center;gap:8px;">
-                <span class="spinner" style="display:inline-block;width:12px;height:12px;border:2px solid var(--tide);border-top-color:transparent;border-radius:50%;animation:spin 0.6s linear infinite;"></span>
-                <span style="color:var(--tide);font-size:12px;font-weight:700;">AI Coach is analyzing your habits...</span>
+        <!-- VIP Waitlist Action -->
+        <div class="ai-waitlist-box">
+          ${isWaitlisted ? `
+            <div class="ai-waitlist-status">
+              <span style="font-size:22px;">✅</span>
+              <div>
+                <div style="font-weight:800;color:var(--tide);font-size:14px;">You're on the VIP Early Access Waitlist!</div>
+                <div style="font-size:12px;color:var(--muted);margin-top:2px;">You will receive priority beta access when Gemini AI Coach launches in V2.0.</div>
               </div>
             </div>
-          ` : ''}
+          ` : `
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+              <div>
+                <div style="font-weight:800;color:var(--ink);font-size:14px;">Be the first to try Gemini AI Coach</div>
+                <div style="font-size:12px;color:var(--muted);margin-top:2px;">Get VIP early beta access and personalized habit formation blueprints.</div>
+              </div>
+              <button class="ai-waitlist-btn" onclick="joinGeminiWaitlist()">
+                <span>🔔 Join VIP Waitlist</span>
+                <span>✨</span>
+              </button>
+            </div>
+          `}
         </div>
-
-        <!-- Input Form -->
-        <form class="ai-input-form" onsubmit="handleAICoachSubmit(event)">
-          <input 
-            type="text" 
-            id="ai-coach-input" 
-            class="ai-input-box" 
-            placeholder="Ask your coach anything about habits, routine, or motivation..." 
-            autocomplete="off"
-            ${isAICoachThinking ? 'disabled' : ''}
-          />
-          <button type="submit" class="ai-submit-btn" ${isAICoachThinking ? 'disabled' : ''}>
-            <span>Ask Coach</span>
-            <span>✨</span>
-          </button>
-        </form>
       </div>
 
       <!-- Smart AI Insights -->
       <div class="card section">
-        <h2 class="stitle">Behavioral Habit Insights</h2>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <h2 class="stitle" style="margin:0;">Instant Behavioral Insights (Offline)</h2>
+          <span style="font-family:var(--mono);font-size:10px;color:var(--tide);background:rgba(73,220,201,0.1);padding:2px 8px;border-radius:10px;">Active Now</span>
+        </div>
         <div class="ai-coach-panel">${insightHtml}</div>
       </div>
 
@@ -6750,7 +7302,7 @@
       <div class="card section">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
           <h2 class="stitle" style="margin:0;">Recommended Habits</h2>
-          <span style="font-family:var(--mono);font-size:10px;color:var(--muted);">Evidence-based recommendations</span>
+          <span style="font-family:var(--mono);font-size:10px;color:var(--muted);">Evidence-based suggestions</span>
         </div>
         <div class="ai-coach-panel">${suggHtml}</div>
         <button class="ai-refresh-btn" onclick="refreshAISuggestions()">
@@ -6759,80 +7311,15 @@
       </div>`;
         }
 
-        async function handleAICoachSubmit(event) {
-          if (event) event.preventDefault();
-          const input = document.getElementById('ai-coach-input');
-          if (!input) return;
-          const prompt = input.value.trim();
-          if (!prompt || isAICoachThinking) return;
-
-          input.value = '';
-          aiCoachConversation.push({ role: 'user', text: prompt });
-          isAICoachThinking = true;
-          render();
-
-          const thread = document.getElementById('ai-chat-thread');
-          if (thread) thread.scrollTop = thread.scrollHeight;
-
-          try {
-            const streak = getBestStreak();
-            const compRate = habits.length ? Math.round(getLast7DaysPct().reduce((a, b) => a + b, 0) / 7) : 0;
-            const habitNames = habits.map(h => h.name);
-
-            const res = await apiFetch('/api/ai/coach', {
-              method: 'POST',
-              body: JSON.stringify({
-                prompt,
-                habits: habitNames,
-                streak,
-                completionRate: compRate
-              })
-            });
-
-            if (res.ok) {
-              const data = await res.json();
-              aiCoachConversation.push({
-                role: 'coach',
-                text: data.reply || 'Great question! Focus on small, consistent steps each day.',
-                source: data.source || 'gemini-coach'
-              });
-            } else {
-              const errData = await res.json().catch(() => ({}));
-              aiCoachConversation.push({
-                role: 'coach',
-                text: `⚠️ ${errData.error || 'Could not connect to AI Coach. Please try again.'}`,
-                source: 'error'
-              });
-            }
-          } catch (err) {
-            aiCoachConversation.push({
-              role: 'coach',
-              text: `⚠️ Connection error while contacting AI Coach. Please check your internet or server connection.`,
-              source: 'error'
-            });
-          } finally {
-            isAICoachThinking = false;
-            render();
-            setTimeout(() => {
-              const t = document.getElementById('ai-chat-thread');
-              if (t) t.scrollTop = t.scrollHeight;
-            }, 50);
-          }
-        }
-
-        function handleQuickAICoachPrompt(promptText) {
-          const input = document.getElementById('ai-coach-input');
-          if (input) {
-            input.value = promptText;
-            handleAICoachSubmit();
-          }
-        }
-
         function addHabitFromAI(habitName) {
-          if (habits.some(h => h.name === habitName)) { showToast('✅ This habit already exists!', 3000); return; }
+          if (habits.some(h => h.name.toLowerCase() === habitName.toLowerCase())) { 
+            showToast('✅ This habit is already in your tracker!', 3000); 
+            return; 
+          }
           habits.push({ id: 'h' + Date.now(), name: habitName, reminderTime: null, days: null });
           saveHabits();
-          showToast('✅ Habit added from AI suggestion!', 3000);
+          showToast(`✅ Added "${habitName}" to your habits!`, 3000);
+          if (typeof fireConfetti === 'function') fireConfetti();
           render();
         }
 
@@ -8595,22 +9082,20 @@
             </svg>
             <span>Edit Profile</span>
           </button>
-          <button class="data-btn profile-action-btn" onclick="openFindFriendsModal()" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.18);color:var(--ink);padding:8px 16px;border-radius:12px;font-size:12.5px;font-weight:700;cursor:pointer;transition:all .18s ease;" title="Find Friends & Partners">
-            <span>👥 Friends (${cachedFriends.length})</span>
+          <button class="data-btn profile-action-btn" onclick="document.getElementById('profile-coach-section').scrollIntoView({behavior:'smooth'})" style="display:inline-flex;align-items:center;gap:7px;background:rgba(73,220,201,0.12);border:1px solid rgba(73,220,201,0.32);color:var(--tide);padding:8px 16px;border-radius:12px;font-size:12.5px;font-weight:700;cursor:pointer;transition:all .18s ease;" title="Gemini AI Habit Coach">
+            <span>🤖 AI Coach</span>
+            <span class="upcoming-tab-badge">Upcoming</span>
           </button>
-          <button class="data-btn profile-action-btn" onclick="document.getElementById('profile-progress-section').scrollIntoView({behavior:'smooth'})" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,rgba(255,90,54,0.16),rgba(45,212,191,0.14));border:1px solid rgba(255,90,54,0.38);color:var(--ink);padding:8px 16px;border-radius:12px;font-size:12.5px;font-weight:700;cursor:pointer;transition:all .18s ease;" title="View Habit Progress & Activity Heatmap">
+          <button class="data-btn profile-action-btn" onclick="document.getElementById('profile-pro-section').scrollIntoView({behavior:'smooth'})" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,90,54,0.12);border:1px solid rgba(255,90,54,0.32);color:var(--ember);padding:8px 16px;border-radius:12px;font-size:12.5px;font-weight:700;cursor:pointer;transition:all .18s ease;" title="Pro Features & Themes">
+            <span>💎 Pro &amp; Themes</span>
+          </button>
+          <button class="data-btn profile-action-btn" onclick="document.getElementById('profile-progress-section').scrollIntoView({behavior:'smooth'})" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.18);color:var(--ink);padding:8px 16px;border-radius:12px;font-size:12.5px;font-weight:700;cursor:pointer;transition:all .18s ease;" title="View Habit Progress & Activity Heatmap">
             <span style="color:var(--ember);">📊</span>
             <span>Habit Progress</span>
           </button>
-          ${!isPro() ? `
-            <button class="pro-upgrade-btn profile-action-btn" onclick="showPricingModal()" style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:12px;font-size:12.5px;font-weight:700;cursor:pointer;">
-              🚀 Upcoming Features
-            </button>
-          ` : `
-            <button class="data-btn profile-action-btn" onclick="setTab('pro')" style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:12px;font-size:12.5px;font-weight:700;cursor:pointer;">
-              💎 Pro Features
-            </button>
-          `}
+          <button class="data-btn profile-action-btn" onclick="openFindFriendsModal()" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.18);color:var(--ink);padding:8px 16px;border-radius:12px;font-size:12.5px;font-weight:700;cursor:pointer;transition:all .18s ease;" title="Find Friends & Partners">
+            <span>👥 Friends (${cachedFriends.length})</span>
+          </button>
         </div>
       </div>
 
@@ -8632,6 +9117,30 @@
           <div class="dash-stat-val violet">📊 ${todayPct}%</div>
           <div class="dash-stat-lbl">Today's Rate</div>
         </div>
+      </div>
+
+      <!-- 🤖 Gemini AI Habit Coach Section (Inside Profile) -->
+      <div id="profile-coach-section" style="margin-top:20px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:0 2px;">
+          <h2 class="stitle" style="margin:0;display:flex;align-items:center;gap:8px;">
+            <span>🤖 Gemini AI Habit Coach</span>
+            <span class="upcoming-tab-badge">Upcoming</span>
+          </h2>
+          <span style="font-family:var(--mono);font-size:10.5px;color:var(--tide);">Phase 2 Flagship</span>
+        </div>
+        ${renderAICoach()}
+      </div>
+
+      <!-- 💎 HabbitTracker Pro Features & Themes (Inside Profile) -->
+      <div id="profile-pro-section" style="margin-top:24px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:0 2px;">
+          <h2 class="stitle" style="margin:0;display:flex;align-items:center;gap:8px;">
+            <span>💎 HabbitTracker Pro &amp; Themes</span>
+            ${isPro() ? `<span class="pro-badge-brand" style="font-size:10px;">ACTIVE PRO</span>` : ''}
+          </h2>
+          <span style="font-family:var(--mono);font-size:10.5px;color:var(--muted);">${isPro() ? 'All Features Unlocked' : 'Roadmap & Themes'}</span>
+        </div>
+        ${renderProPage()}
       </div>
 
       <!-- Habit Progress & 52-Week Activity Heatmap (Shifted directly into Profile) -->
@@ -8666,30 +9175,6 @@
           <button class="cloud-action-btn" onclick="importData()">
             📂 Restore from JSON
           </button>
-        </div>
-      </div>
-
-      <!-- Membership & Plan Details Card -->
-      <div class="card section" style="display:flex;flex-direction:column;gap:12px;">
-        <h2 class="stitle">Application Edition & Roadmap</h2>
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-          <div>
-            <div style="font-size:16px;font-weight:800;color:var(--ink);">
-              ${isPro() ? '⭐ HabbitTracker Pro Tier' : 'HabbitTracker Standard Edition'}
-            </div>
-            <div style="font-size:12px;color:var(--muted);margin-top:2px;">
-              ${isPro()
-              ? 'Enjoy unlimited habits, AI Coach, 30-day challenges, and full streak analytics.'
-              : 'Core tracking active. Gemini AI Coach, 52-Week Heatmaps, and Pro Sync coming soon!'}
-            </div>
-          </div>
-          ${!isPro() ? `
-            <button class="pro-upgrade-btn" onclick="showPricingModal()" style="display:inline-flex;align-items:center;gap:6px;">
-              🚀 Upcoming Roadmap
-            </button>
-          ` : `
-            <span class="pro-badge-brand" style="font-size:12px;padding:6px 12px;">ACTIVE PRO</span>
-          `}
         </div>
       </div>
 
@@ -8859,12 +9344,14 @@
           }).join('') : `<tr><td colspan="${dates.length + 2}" class="empty">No habits added yet.</td></tr>`;
 
           const gridTitle = weeklyMeta.focus ? esc(weeklyMeta.focus) : 'HABBITTRACKER';
-          return `<div class="card section" style="overflow-x:auto;">
+          return `<div class="card section">
     <h2 class="stitle" style="text-transform:uppercase;">${gridTitle}</h2>
-    <table class="habit-grid" role="grid" aria-label="Weekly habit grid">
-      <thead><tr><th scope="col">Habit</th>${headerCells}<th scope="col">Progress</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="habit-grid" role="grid" aria-label="Weekly habit grid">
+        <thead><tr><th scope="col">Habit</th>${headerCells}<th scope="col">Progress</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
     <div class="add-row">
       <input id="new-habit-input" placeholder="Add new habit..." aria-label="New habit name"
         onkeydown="if(event.key==='Enter')addHabit()"/>
@@ -9111,6 +9598,24 @@
             render();
             setTimeout(() => {
               const el = document.getElementById('profile-progress-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }, 60);
+            return;
+          }
+          if (t === 'coach') {
+            activeTab = 'account';
+            render();
+            setTimeout(() => {
+              const el = document.getElementById('profile-coach-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }, 60);
+            return;
+          }
+          if (t === 'pro') {
+            activeTab = 'account';
+            render();
+            setTimeout(() => {
+              const el = document.getElementById('profile-pro-section');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }, 60);
             return;
